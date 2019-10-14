@@ -8,7 +8,7 @@ class FinalColumn extends Component {
     return (
       <div className = "FinalColumn" id = "bracketColumn">
       <div className = "columnHeader">{this.props.name}</div>
-      <Pair winnerClickHandle={this.props.winnerClickHandle} top={this.props.seedList[0]} topNum={"?"} bottom={this.props.seedList[1]} bottomNum={"?"} />
+      <Pair winnerClickHandle={this.props.winnerClickHandle} top={this.props.seedList[0]} bottom={this.props.seedList[1]} />
       </div>
     );
   }

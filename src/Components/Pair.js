@@ -8,8 +8,8 @@ class Pair extends Component {
   render(){
     return (
         <div className="Pair">
-            <Player topOrBottom="top" name={this.props.top} num={this.props.topNum} winnerClickHandle={this.props.winnerClickHandle} />
-            <Player topOrBottom="bottom" name={this.props.bottom} num={this.props.bottomNum} winnerClickHandle={this.props.winnerClickHandle}/>
+            <Player topOrBottom="top" name={this.props.top.name} seedNum={this.props.top.seed_num} winnerClickHandle={this.props.winnerClickHandle} />
+            <Player topOrBottom="bottom" name={this.props.bottom.name} seedNum={this.props.bottom.seed_num} winnerClickHandle={this.props.winnerClickHandle}/>
         </div>
     );
   }

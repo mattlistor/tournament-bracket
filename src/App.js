@@ -14,7 +14,8 @@ class App extends Component {
     seedList: [],
     editingSeed: false,
     shuffle: false,
-    showBracket: false
+    showBracket: false,
+    bracketSeedList: []
   }
 
   goTologIn = (e) => {
@@ -77,22 +78,13 @@ class App extends Component {
         seedList: [...this.state.seedList, this.state.currentSeed],
         username: "",
         editingSeed: false,
-        currentSeed: ""
+        currentSeed: "",
       })
 
-      // document.getElementById("seedInput").placeholder = "Enter Seed"
       document.getElementById("seedInput").value = ""
-
-          // fetch to create new seed
-
     } 
-    else {
-      // document.getElementById("seedInput").placeholder = "ENTER SEED"
-    }
-    document.getElementById("seedInput").focus()
 
-    // let element = document.getElementsByClassName("SeedContainer");
-    // element.scrollTop( element.height)
+    document.getElementById("seedInput").focus()
   }
 
   deleteSeed = (index) => {
@@ -104,8 +96,6 @@ class App extends Component {
     this.setState({
       seedList: newArray
     })
-
-    // fetch request to delete the seed from database
   }
 
   editSeed = (index) => {
@@ -151,9 +141,38 @@ class App extends Component {
     // }
 
     if(seedList.length === 2 || seedList.length === 4){
-      this.setState({
-        showBracket: true, 
-        seedList: seedList
+
+      let data = this.state.seedList.map((seed, index) => {
+        return {
+          name: seed,
+          seed_num: index + 1,
+          bracket_id: 1
+        }
+      })
+        
+      //creates all seed in one bundle, not one-by-one
+      fetch("http://localhost:3000/seeds", {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify({data}), // data can be `string` or {object}!
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        // checks to shuffle, then creates a send-off list of Seed objects 
+        if (this.state.shuffle) {
+          this.setState({
+            showBracket: true, 
+            bracketSeedList: this.shuffle(res)
+          })
+        }
+        if (!this.state.shuffle) {
+          this.setState({
+            showBracket: true, 
+            bracketSeedList: res
+          })
+        }
       })
     }
   }
@@ -177,7 +196,6 @@ class App extends Component {
   }
   
   render(){
-    console.log("showBracket: ", this.state.showBracket)
     return (
       <div>
         {this.state.addSeeds ? 
@@ -210,7 +228,7 @@ class App extends Component {
         }
         {this.state.showBracket ?
         <div className="bracket">
-          <Bracket seedList={this.state.seedList}/>
+          <Bracket seedList={this.state.bracketSeedList}/>
         </div>
         :
         null

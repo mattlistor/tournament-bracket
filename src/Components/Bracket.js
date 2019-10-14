@@ -9,6 +9,7 @@ class Bracket extends Component {
     state = {
         seedListFirstColumn: this.props.seedList,
         seedListFinalColumn: ["", ""]
+        //narrow down by that particular bracket id
     }
 
     winnerClickHandle = (e, name, num) => {
@@ -19,9 +20,9 @@ class Bracket extends Component {
     render(){
         return ( 
             <div className="Bracket">
-            <FirstColumn name="Semifinals" winnerClickHandle={this.winnerClickHandle} pairAmount={2} playerAmount={4} seedList={this.state.seedListFirstColumn}/>
+            <FirstColumn name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn}/>
             {/* in-between columns component array  */}
-            <FinalColumn name="Finals" winnerClickHandle={this.winnerClickHandle} pairAmount={1} playerAmount={2} seedList={this.state.seedListFinalColumn}/>
+            {/* <FinalColumn name="Finals" winnerClickHandle={this.winnerClickHandle} pairAmount={1} playerAmount={2} seedList={this.state.seedListFinalColumn}/> */}
             </div>
         );
   }

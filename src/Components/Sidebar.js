@@ -4,6 +4,7 @@ import SeedContainer from './SeedContainer.js';
 // import '../App.css';
 
 class Sidebar extends Component {
+  
   render(){
     return (
         <div className="content">
