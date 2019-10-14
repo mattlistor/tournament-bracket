@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 // import '../App.css';
 
-class Player extends Component { 
+class FirstColumnPlayer extends Component { 
 
   render(){
     console.log("player render: ", this.props.name, this.props.seedNum)
@@ -15,4 +15,4 @@ class Player extends Component {
   }
 }
 
-export default Player;
+export default FirstColumnPlayer;

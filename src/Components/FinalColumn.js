@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Pair from './Pair.js';
+// import Pair from './Pair.js';
 
 // import '../App.css';
 
@@ -8,7 +8,7 @@ class FinalColumn extends Component {
     return (
       <div className = "FinalColumn" id = "bracketColumn">
       <div className = "columnHeader">{this.props.name}</div>
-      <Pair winnerClickHandle={this.props.winnerClickHandle} top={this.props.seedList[0]} bottom={this.props.seedList[1]} />
+      {/* <Pair winnerClickHandle={this.props.winnerClickHandle} top={this.props.seedList[0]} bottom={this.props.seedList[1]} /> */}
       </div>
     );
   }

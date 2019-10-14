@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Pair from './Pair.js';
+import FirstColumnPair from './FirstColumnPair.js';
 
 
 // import '../App.css';
@@ -11,7 +11,7 @@ class FirstColumn extends Component {
     let i = 0
     let key = 1
     while (i < this.props.pairAmount * 2) {
-      pairComponents = [...pairComponents, <Pair key={key} winnerClickHandle={this.props.winnerClickHandle} top={this.props.seedList[i]} bottom={this.props.seedList[i+1]} seedList={this.props.seedList}/>]
+      pairComponents = [...pairComponents, <FirstColumnPair key={key} winnerClickHandle={this.props.winnerClickHandle} top={this.props.seedList[i]} bottom={this.props.seedList[i+1]} seedList={this.props.seedList}/>]
       key = key + 1;
       i = i + 2;
     }

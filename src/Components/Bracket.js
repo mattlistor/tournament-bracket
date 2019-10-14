@@ -7,13 +7,18 @@ import FinalColumn from './FinalColumn.js';
 
 class Bracket extends Component {
     state = {
-        seedListFirstColumn: this.props.seedList,
-        seedListFinalColumn: ["", ""]
-        //narrow down by that particular bracket id
+        seedListFirstColumn: this.props.seedList, //need to narrow down by that particular bracket id
+        seedListFinalColumn: ["", ""],
+        columnAmount: Math.ceil(this.state.seedList.length/2) - 2 //excludes first and last column
     }
 
     winnerClickHandle = (e, name, num) => {
         console.log("ayooo", e.target, name, num)
+    }
+
+    generateColumns = () => {
+        let amountOfColumns = this.state.columnAmount-2
+        {Math.ceil(this.state.seedListFirstColumn.length/2)}
     }
   
 

@@ -134,13 +134,12 @@ class App extends Component {
 
   generate = () => {
     let seedList = this.state.seedList
+    
+    this.setState({
+      showBracket: false
+    })
 
-    // IF SHUFFLE IS ON
-    // if (this.state.shuffle){
-    //   seedList = this.shuffle(seedList)
-    // }
-
-    if(seedList.length === 2 || seedList.length === 4){
+    if(seedList.length === 4){
 
       let data = this.state.seedList.map((seed, index) => {
         return {
