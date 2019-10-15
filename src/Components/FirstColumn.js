@@ -16,7 +16,6 @@ class FirstColumn extends Component {
       i = i + 2;
     }
     ////
-    console.log("pairs: ", pairComponents.length)
     return pairComponents
   }
 

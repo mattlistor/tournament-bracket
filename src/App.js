@@ -139,7 +139,7 @@ class App extends Component {
       showBracket: false
     })
 
-    if(seedList.length === 4){
+    if(seedList.length){
 
       let data = this.state.seedList.map((seed, index) => {
         return {
