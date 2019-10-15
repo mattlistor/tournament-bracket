@@ -60,7 +60,7 @@ class App extends Component {
     this.setState({
       shuffle: e.target.checked
     })
-    e.target.checked ? console.log("Shuffle On") : console.log("Shuffle Off")
+    this.generate()
   }
 
   currentSeedChange = (e) => {
@@ -79,6 +79,7 @@ class App extends Component {
         username: "",
         editingSeed: false,
         currentSeed: "",
+        showBracket: false
       })
 
       document.getElementById("seedInput").value = ""
@@ -94,8 +95,10 @@ class App extends Component {
     console.log(newArray)
 
     this.setState({
-      seedList: newArray
+      seedList: newArray,
+      showBracket: false
     })
+
   }
 
   editSeed = (index) => {
@@ -139,7 +142,8 @@ class App extends Component {
       showBracket: false
     })
 
-    if(seedList.length){
+    let allowedSeedAmounts = [4, 8, 16, 32, 64]
+    if(allowedSeedAmounts.includes(seedList.length)){
 
       let data = this.state.seedList.map((seed, index) => {
         return {
@@ -173,6 +177,33 @@ class App extends Component {
           })
         }
       })
+      
+      // generate bracket object
+      let bracket = {
+        `${0}`: seedList.length / 2,
+        `${pairAmountPerColumn.length-2}`: 2,
+        `${pairAmountPerColumn.length-1}`: 1
+      }
+
+      let pairAmount = seedList.length / 4
+      let round = 2 
+      let pairAmountPerColumn = [[]]
+      while (pairAmount !== 1) {
+          pairAmountPerColumn.push(pairAmount)
+          bracket[`${round}`] = pairAmount
+          pairAmount = pairAmount / 2
+          round = round + 1
+      }
+
+      // this.setState({
+      //     pairAmountPerColumn: pairAmountPerColumn
+      // })
+     console.log("HEY!", bracket)
+      pairAmountPerColumn.forEach((pairAmount) => {
+        // return 
+      })
+      /////////
+      /////////
     }
   }
 

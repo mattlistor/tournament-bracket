@@ -13,6 +13,14 @@ class Bracket extends Component {
         pairAmountPerColumn: []
     }
 
+    componentDidMount(){
+        let firstPairContainer = document.getElementsByClassName("firstPairContainer")
+        let columnHeight = firstPairContainer[0].clientHeight
+        this.setState({
+            columnHeight: columnHeight
+        })
+    }
+
     winnerClickHandle = (e, name, num) => {
         console.log("ayooo", e.target, name, num)
     }
@@ -30,23 +38,31 @@ class Bracket extends Component {
         // this.setState({
         //     pairAmountPerColumn: pairAmountPerColumn
         // })
-
-        console.log(pairAmountPerColumn)
        
         return pairAmountPerColumn
     }
 
     generateColumnComponents = () => {
-        return this.pairAmountPerColumn().map((pairAmount, index) => <Column pairAmount={pairAmount} name="Round #" key={index} />)
+        let semiFinalColumn = this.pairAmountPerColumn().length+1
+        return this.pairAmountPerColumn().map((pairAmount, index) => {
+                if (semiFinalColumn === index + 2){
+                    return <Column height={this.state.columnHeight} pairAmount={pairAmount} name="Semifinals" key={index} />
+                }
+                else{
+                     return <Column height={this.state.columnHeight} pairAmount={pairAmount} name={`Round ${index+2}`} key={index} />
+                }
+            }
+        )
     }
 
     render(){
        this.pairAmountPerColumn()
         return ( 
             <div className="Bracket">
-            <FirstColumn name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn}/>
-            {this.generateColumnComponents()}
-            <FinalColumn name="Finals" winnerClickHandle={this.winnerClickHandle} pairAmount={1} playerAmount={2} seedList={this.state.seedListFinalColumn}/>
+                <FirstColumn name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn}/>
+                {this.generateColumnComponents()}
+                <Column height={this.state.columnHeight} pairAmount={1} name="Finals" />
+                {/* <FinalColumn name="Finals" height={this.state.height} winnerClickHandle={this.winnerClickHandle} pairAmount={1} playerAmount={2} seedList={this.state.seedListFinalColumn}/> */}
             </div>
         );
   }

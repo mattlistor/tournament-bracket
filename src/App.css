@@ -219,6 +219,7 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   height:65%;
   padding-right: 8px;
   /* border-bottom:solid white; */
+
 }
 
 /* width */
@@ -246,7 +247,7 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   /* direction:ltr; */
   background-color: #54857d;
   font-size: 16px;
-  margin-bottom:10px;
+  margin-bottom:4px;
   height: 20px;
   display: flex;
   align-items: center;
@@ -254,6 +255,8 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   padding-right: 10px;
   padding-left: 0px;
   justify-content: space-between;
+  border-radius: 3px;
+  
 }
 
 .seedNum {
@@ -264,6 +267,8 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
 }
 
 #deleteSeed{
@@ -384,7 +389,11 @@ h1 {
   align-items: center;
   margin-bottom: 30px;
   /* justify-content: space-between; */
+  /* border:solid 1px; */
+  border-radius: 3px;
 }
+
+
 
 .Player#top{
   /* border-bottom: solid 1px; 
@@ -418,6 +427,30 @@ h1 {
   background-color: #f8ca60;
 }
 
+.playerNotInteractive {
+  background-color: #f1f1f1;
+  font-size: 16px;
+  color: #24413c;
+  width: 200px;
+  height: 32px;
+  /* padding: 10px; */
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  /* justify-content: space-between; */
+  /* border:solid 1px; */
+  border-radius: 3px;
+}
+.playerNotInteractive#top{
+  /* border-bottom: solid 1px; 
+  border-color: white; */
+  margin-bottom: 4px;
+}
+.playerNotInteractive#bottom{
+  /* border-top: solid 1px; 
+  border-color: white; */
+}
+
 .bracketSeedNum {
   color: #24413c;
   background-color: #cecece;
@@ -427,6 +460,9 @@ h1 {
   align-items: center;
   justify-content: center;
   position: relative;
+  /* border:solid 1px; */
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
 }
 
 .bracketSeedName {
@@ -436,7 +472,7 @@ h1 {
 
 .columnHeader {
   color: #24413c;
-  width: 100%;
+  width: 200px;
   font-size: 14px;
   /* font-weight: bold; */
   border-bottom: solid 1px;
@@ -448,15 +484,48 @@ h1 {
   display: flex;
   /* justify-content: center; */
   align-items: center;
+  /* position: fixed; */
 }
 
 .Bracket{
   display:flex;
   flex-direction: row;
+  overflow-y:auto;
+  /* overflow-x:scroll; */
+    /* height: 50%; */
+
+  height: 685px;
+  /* border-bottom: solid 1px; */
+  /* border-color: #24413c; */
+  /* margin-right: 50px; */
+  width: 1000px;
+  /* height: 100%; */
 }
 
 #bracketColumn{
+  /* display:flex; */
   margin-right:28px;
+  width: 200px;
+  /* height: 685px; */
+}
+
+ .pairContainer{
+   /* height: 784px; */
+  /* margin-top: 10px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* position: fixed; */
+ }
+
+ .firstPairContainer{
+   /* find a way to grab whatever the height is of this */
+   /* height: 30px; */
+ /* margin-top: 10px; */
+ display: flex;
+ flex-direction: column;
+ justify-content: space-around;
+ /* position: fixed; */
 }
 
 

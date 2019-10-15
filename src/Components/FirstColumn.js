@@ -5,7 +5,6 @@ import FirstColumnPair from './FirstColumnPair.js';
 // import '../App.css';
 
 class FirstColumn extends Component {
-  // generate pairs for the column
   generateFirstColumnPairs = () => {
     let pairComponents = []
     let i = 0
@@ -15,7 +14,6 @@ class FirstColumn extends Component {
       key = key + 1;
       i = i + 2;
     }
-    ////
     return pairComponents
   }
 
@@ -23,7 +21,9 @@ class FirstColumn extends Component {
     return (
       <div className = "FirstColumn" id = "bracketColumn">
       <div className = "columnHeader" >{this.props.name}</div>
-      {this.generateFirstColumnPairs()}
+      <div className = "firstPairContainer" id = "firstPairContainer">
+            {this.generateFirstColumnPairs()}
+      </div>
       </div>
     );
   }
