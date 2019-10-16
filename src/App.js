@@ -58,9 +58,10 @@ class App extends Component {
 
   checkbox = (e) => {
     this.setState({
-      shuffle: e.target.checked
+      shuffle: e.target.checked,
+      showBracket: false
     })
-    this.generate()
+    // this.generate()
   }
 
   currentSeedChange = (e) => {
@@ -163,47 +164,70 @@ class App extends Component {
       })
       .then((res) => res.json())
       .then((res) => {
-        // checks to shuffle, then creates a send-off list of Seed objects 
-        if (this.state.shuffle) {
-          this.setState({
-            showBracket: true, 
-            bracketSeedList: this.shuffle(res)
-          })
-        }
-        if (!this.state.shuffle) {
+          //SHUFFLE FUNCTION IS CURRENTLY NOT WORKING
+          //===========================================
+          // var shuffledSeedList = this.shuffle(res)
+          // let bracketSeedList
+          // checks to shuffle, then creates a send-off list of Seed objects 
+        //   if (this.state.shuffle) {
+        //     this.setState({
+        //       showBracket: true, 
+        //       bracketSeedList: shuffledSeedList
+        //     })
+        //     bracketSeedList = shuffledSeedList
+        //   }
+        // if (!this.state.shuffle) {
+        //   this.setState({
+        //     showBracket: true, 
+        //     bracketSeedList: res
+        //   })
+        //   bracketSeedList = res
+        // }
           this.setState({
             showBracket: true, 
             bracketSeedList: res
           })
+        return res
+      })
+      .then((bracketSeedList) => {
+        // generate bracket object
+        let bracket = {
+          1: seedList.length / 2,
         }
-      })
-      
-      // generate bracket object
-      let bracket = {
-        `${0}`: seedList.length / 2,
-        `${pairAmountPerColumn.length-2}`: 2,
-        `${pairAmountPerColumn.length-1}`: 1
-      }
 
-      let pairAmount = seedList.length / 4
-      let round = 2 
-      let pairAmountPerColumn = [[]]
-      while (pairAmount !== 1) {
-          pairAmountPerColumn.push(pairAmount)
-          bracket[`${round}`] = pairAmount
-          pairAmount = pairAmount / 2
-          round = round + 1
-      }
+        let pairAmount = seedList.length / 4
+        let round = 2 
+        let pairAmountPerColumn = [[]]
+        while (pairAmount !== 1) {
+            pairAmountPerColumn.push(pairAmount)
+            bracket[round] = pairAmount
+            pairAmount = pairAmount / 2
+            round = round + 1
+        }
+        bracket[round] = 1
 
-      // this.setState({
-      //     pairAmountPerColumn: pairAmountPerColumn
-      // })
-     console.log("HEY!", bracket)
-      pairAmountPerColumn.forEach((pairAmount) => {
-        // return 
+        let bracketArray = Object.keys(bracket).map(i => bracket[i])
+        
+        let bracketFinal =  []
+        let seedListIndex = 0
+
+        bracketArray.forEach((columnPairAmount, index) => {
+          var i;
+          bracketFinal[index] = []
+          for (i = 0; i < columnPairAmount; i++) {
+            //pushes a PAIR to the index (column) of the array (bracket)
+            bracketFinal[index].push([bracketSeedList[seedListIndex], bracketSeedList[seedListIndex+1]])
+            // console.log("column:", index)
+            seedListIndex = seedListIndex + 2
+          }
+        })
+
+        this.setState({
+          bracket: bracketFinal
+        })
+        
+        // fetch to make a new bracket object
       })
-      /////////
-      /////////
     }
   }
 
@@ -258,7 +282,7 @@ class App extends Component {
         }
         {this.state.showBracket ?
         <div className="bracket">
-          <Bracket seedList={this.state.bracketSeedList}/>
+          <Bracket seedList={this.state.bracketSeedList} bracket={this.state.bracket}/>
         </div>
         :
         null

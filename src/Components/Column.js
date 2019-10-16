@@ -5,10 +5,11 @@ import Pair from './Pair.js';
 // import '../App.css';
 
 class Column extends Component {
+          //interactivty starts out as 'locked'
+  state = {
+      interactive:false,
 
-// GENERATE THE PAIRS BASED ON THE AMOUNT NEEDED FOR THE COLUMN (this.props.pairAmount.forEach)
-
-  state = {interactive:false}
+    }
 
 
   generateColumnPairs = () => {
@@ -22,16 +23,7 @@ class Column extends Component {
   }
 
   componentDidMount() {
-    // let firstPairContainer = document.getElementsByClassName("firstPairContainer")
-    // let columnHeight = firstPairContainer[0].clientHeight
-    // this.setState({
-    //     columnHeight: columnHeight
-    // })
-
-    // let i;
-    // for (i = 0; i <  document.getElementsByClassName("pairContainer").length; i++) {
-    //     // document.getElementsByClassName("pairContainer")[i].style.height = `${columnHeight}px`
-    // }
+    
   }
 
   getHeight = () => {
@@ -39,7 +31,6 @@ class Column extends Component {
   }
 
   render(){
-    console.log(this.props.height)
     const style = {
         height: this.props.height + 'px'
       };
