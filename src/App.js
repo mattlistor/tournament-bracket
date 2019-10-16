@@ -146,6 +146,16 @@ class App extends Component {
     let allowedSeedAmounts = [4, 8, 16, 32, 64]
     if(allowedSeedAmounts.includes(seedList.length)){
 
+      // //fetch to create bracket object 
+      // fetch("http://localhost:3000/brackets", {
+      //   method: 'POST', // or 'PUT'
+      //   body: JSON.stringify({}), // data can be `string` or {object}!
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // })
+
+      ////map out each seed object into 'data' so we can create it all in one bundle
       let data = this.state.seedList.map((seed, index) => {
         return {
           name: seed,
@@ -207,27 +217,76 @@ class App extends Component {
         bracket[round] = 1
 
         let bracketArray = Object.keys(bracket).map(i => bracket[i])
-        
+        let treePlacementSize = bracketArray.reduce((a, b) => a + b, 0)
+
         let bracketFinal =  []
         let seedListIndex = 0
-
+        let treePlacement = treePlacementSize - 1 
+        
         bracketArray.forEach((columnPairAmount, index) => {
           var i;
           bracketFinal[index] = []
-          for (i = 0; i < columnPairAmount; i++) {
+          let top = true
+
+          for (i = columnPairAmount; i > 0; i--) {
             //pushes a PAIR to the index (column) of the array (bracket)
-            bracketFinal[index].push([bracketSeedList[seedListIndex], bracketSeedList[seedListIndex+1]])
-            // console.log("column:", index)
+
+            // bracketFinal[index].push([bracketSeedList[seedListIndex], bracketSeedList[seedListIndex+1]])
+            
+            let topOrBottom
+            if(top){
+              topOrBottom = "top"
+            }
+            else{
+              topOrBottom = "bottom"
+            }
+            
+            let pair = {
+              topOrBottom: topOrBottom,
+              column: index,
+              treePlacement: treePlacement-(i-1),
+              top: bracketSeedList[seedListIndex],
+              bottom: bracketSeedList[seedListIndex+1]
+            }
+            bracketFinal[index].push(pair)
+            
+            // console.log(treePlacement-(i-1))
+            top = !top
             seedListIndex = seedListIndex + 2
           }
+          treePlacement -= columnPairAmount
         })
 
         this.setState({
           bracket: bracketFinal
         })
-        
-        // fetch to make a new bracket object
+
+        //fetch to create bracket object 
+        fetch("http://localhost:3000/brackets", {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(
+            {
+            bracket: {
+              bracket: JSON.stringify(bracketFinal),
+              user_id: 1
+              }
+            }
+          ), // data can be `string` or {object}!
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+        //// TEST ////
+        let thing = JSON.stringify({
+          bracket: JSON.stringify(bracketFinal),
+          user_id: 1
+        })
+        // console.log(JSON.parse(JSON.parse(thing).bracket))
+        //////////////
+
       })
+
     }
   }
 
@@ -250,6 +309,7 @@ class App extends Component {
   }
   
   render(){
+    // console.log(this.generate())
     return (
       <div>
         {this.state.addSeeds ? 

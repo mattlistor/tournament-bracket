@@ -29,9 +29,9 @@ class Bracket extends Component {
         // console.log("turtle", this.props.bracket)
     }
 
-    winnerClickHandle = (e, name, num) => {
+    winnerClickHandle = (e, name, num, pair) => {
         console.log("ayooo", e.target, name)
-        console.log(this.props.bracket)
+        // console.log(this.props.bracket)
 
         // when clicked
         // makes that pair not interactive anymore  
@@ -42,6 +42,7 @@ class Bracket extends Component {
         // find the child pair
         // if the top pair was clicked then adds it to top of child pair and vice versa
         // makes 
+        // edit bracket object and rerender
     }
 
     pairAmountPerColumn = () => {
@@ -57,6 +58,7 @@ class Bracket extends Component {
     }
 
     generateColumnComponents = () => {
+        // console.log(this.props.bracket)
         let semiFinalColumn = this.pairAmountPerColumn().length+1
         return this.pairAmountPerColumn().map((pairAmount, index) => {
                 if (semiFinalColumn === index + 2){
@@ -74,6 +76,7 @@ class Bracket extends Component {
     }
 
     render(){
+        console.log(this.props.bracket)
         return ( 
             <div className="Bracket">
                 <FirstColumn name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn}/>

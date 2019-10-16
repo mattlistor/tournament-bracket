@@ -5,25 +5,31 @@ import Pair from './Pair.js';
 // import '../App.css';
 
 class Column extends Component {
-          //interactivty starts out as 'locked'
+      //interactivty starts out as 'locked'
   state = {
       interactive:false,
-
+      interactivePairList: []
     }
 
 
   generateColumnPairs = () => {
     let pairComponents = []
     let i = 0
+    let top = true 
     while (i < this.props.pairAmount) {
-        pairComponents = [...pairComponents, <Pair interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
+        (top ? 
+        pairComponents = [...pairComponents, <Pair topOrBottom="top" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
+        :
+        pairComponents = [...pairComponents, <Pair topOrBottom="bottom" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
+        )
         i = i + 1;
+        top = !top
     }
     return pairComponents
   }
 
   componentDidMount() {
-    
+
   }
 
   getHeight = () => {
@@ -35,7 +41,7 @@ class Column extends Component {
         height: this.props.height + 'px'
       };
     return (
-      <div className = "Column" id = "bracketColumn" height = {`${this.props.height}`}>
+      <div className = "Column" id = "bracketColumn">
         <div className = "columnHeader" >{this.props.name}</div>
         <div className = "pairContainer" style={style}>
             {this.generateColumnPairs()}
