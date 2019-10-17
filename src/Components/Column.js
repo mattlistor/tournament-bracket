@@ -16,11 +16,13 @@ class Column extends Component {
     let pairComponents = []
     let i = 0
     let top = true 
+
+
     while (i < this.props.pairAmount) {
         (top ? 
-        pairComponents = [...pairComponents, <Pair topOrBottom="top" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
+        pairComponents = [...pairComponents, <Pair treePlacement={this.props.treeTopPlacement+i} topOrBottom="top" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
         :
-        pairComponents = [...pairComponents, <Pair topOrBottom="bottom" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
+        pairComponents = [...pairComponents, <Pair treePlacement={this.props.treeTopPlacement+i} topOrBottom="bottom" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
         )
         i = i + 1;
         top = !top

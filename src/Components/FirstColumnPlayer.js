@@ -5,8 +5,9 @@ import React, {Component} from 'react';
 class FirstColumnPlayer extends Component { 
 
   render(){
+    console.log(this.props)
     return (
-        <div className="Player" id={this.props.topOrBottom} onClick={(e) => this.props.winnerClickHandle(e, this.props.name, this.props.num)}>
+        <div className="Player" id={this.props.topOrBottom} onClick={(e) => this.props.winnerClickHandle(e, this.props.treePlacement)}>
             <div className="bracketSeedNum">{this.props.seedNum}</div>
             <div className="bracketSeedName">{this.props.name.substring(0, 18)}</div>
         </div>

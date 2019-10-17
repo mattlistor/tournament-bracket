@@ -193,10 +193,10 @@ class App extends Component {
         //   })
         //   bracketSeedList = res
         // }
-          this.setState({
-            showBracket: true, 
-            bracketSeedList: res
-          })
+          // this.setState({
+          //   showBracket: true, 
+          //   bracketSeedList: res
+          // })
         return res
       })
       .then((bracketSeedList) => {
@@ -246,7 +246,8 @@ class App extends Component {
               column: index,
               treePlacement: treePlacement-(i-1),
               top: bracketSeedList[seedListIndex],
-              bottom: bracketSeedList[seedListIndex+1]
+              bottom: bracketSeedList[seedListIndex+1],
+              interactive: false
             }
             bracketFinal[index].push(pair)
             
@@ -256,10 +257,7 @@ class App extends Component {
           }
           treePlacement -= columnPairAmount
         })
-
-        this.setState({
-          bracket: bracketFinal
-        })
+        bracketFinal["treePlacementSize"] = treePlacementSize
 
         //fetch to create bracket object 
         fetch("http://localhost:3000/brackets", {
@@ -271,17 +269,30 @@ class App extends Component {
               user_id: 1
               }
             }
-          ), // data can be `string` or {object}!
+          ), 
           headers: {
             'Content-Type': 'application/json'
           }
         })
+        .then(res => res.json())
+        .then(res => {
+          // console.log("res", res.id)
+          this.setState({
+            bracket: res.bracket,
+            bracketId: res.id,
+            showBracket: true, 
+            bracketSeedList: bracketSeedList,
+            treeSize: treePlacementSize
+          })
+        })
+        
+        // GET THE bracketId from the bracket you just made 
 
         //// TEST ////
-        let thing = JSON.stringify({
-          bracket: JSON.stringify(bracketFinal),
-          user_id: 1
-        })
+        // let thing = JSON.stringify({
+        //   bracket: JSON.stringify(bracketFinal),
+        //   user_id: 1
+        // })
         // console.log(JSON.parse(JSON.parse(thing).bracket))
         //////////////
 
@@ -342,7 +353,7 @@ class App extends Component {
         }
         {this.state.showBracket ?
         <div className="bracket">
-          <Bracket seedList={this.state.bracketSeedList} bracket={this.state.bracket}/>
+          <Bracket seedList={this.state.bracketSeedList} treeSize={this.state.treeSize} bracket={this.state.bracket} bracketId={this.state.bracketId}/>
         </div>
         :
         null

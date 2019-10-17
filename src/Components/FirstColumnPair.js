@@ -8,9 +8,9 @@ class FirstColumnPair extends Component {
   render(){
     return (
         <div className="Pair">
-            <p>{this.props.topOrBottom}</p>
-            <FirstColumnPlayer topOrBottom="top" name={this.props.top.name} seedNum={this.props.top.seed_num} winnerClickHandle={this.props.winnerClickHandle} />
-            <FirstColumnPlayer topOrBottom="bottom" name={this.props.bottom.name} seedNum={this.props.bottom.seed_num} winnerClickHandle={this.props.winnerClickHandle}/>
+            <p>{this.props.topOrBottom} - {this.props.treePlacement}</p>
+            <FirstColumnPlayer treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="top" name={this.props.top.name} seedNum={this.props.top.seed_num} winnerClickHandle={this.props.winnerClickHandle} />
+            <FirstColumnPlayer treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="bottom" name={this.props.bottom.name} seedNum={this.props.bottom.seed_num} winnerClickHandle={this.props.winnerClickHandle}/>
         </div>
     );
   }

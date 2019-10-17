@@ -3,10 +3,22 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
+:root {
+  --light-green: #54857d;
+  --dark-green: #36605a;
+  --seedNum: #4e7d75;
+
+}
+/* :root {
+  --light-green: rgb(25, 65, 129);
+  --dark-green: rgb(8, 32, 70);
+  --seedNum: rgb(25, 65, 129);
+} */
+
 body {
   margin: 0;
   font-size: 17px;
-  background-color: #54857d;
+  background-color: var(--light-green);
 }
 
 .main {
@@ -30,7 +42,7 @@ body {
 
 .content {
   position: absolute;
-  background: #36605a;
+  background: var(--dark-green);
   /* background: #031615; */
   /* opacity: 0.95; */
   color: #ffffff;
@@ -87,7 +99,7 @@ form{
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
-  background: #36605a;
+  background: var(--dark-green);
   /* background: #315a54; */
   color: white;
   width: 300px;
@@ -96,7 +108,7 @@ input[type=text], input[type=password] {
   margin: 8px 0;
   margin-bottom: 16px;
   display: inline-block;
-  border: 1px solid #36605a;
+  border: 1px solid var(--dark-green);
   box-sizing: border-box;
   font-size: 20px;
   outline:none;
@@ -174,17 +186,17 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: #54857d;
+  background-color: var(--light-green);
 }
 
 /* On mouse-over */
 .container:hover input ~ .checkmark {
-  background-color: #24413c;
+  background-color: var(--light-green);
 }
 
 /* When the checkbox is checked */
 .container input:checked ~ .checkmark {
-  background-color: #54857d;
+  background-color:var(--light-green);
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -245,7 +257,7 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 
 .Seed {
   /* direction:ltr; */
-  background-color: #54857d;
+  background-color: var(--light-green); 
   font-size: 16px;
   margin-bottom:4px;
   height: 20px;
@@ -260,8 +272,8 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 }
 
 .seedNum {
-  color: #36605a;
-  background-color: #4e7d75;
+  color: var(--dark-green);
+  background-color: var(--seedNum);
   height: 32px;
   width: 32px;
   display: flex;
@@ -375,7 +387,7 @@ h1 {
 
 .Pair{
   font-size: 10px;
-  background-color: #54857d;
+  background-color: var(--light-green);
 }
 
 .Player{
