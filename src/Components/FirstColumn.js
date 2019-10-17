@@ -73,9 +73,9 @@ class FirstColumn extends Component {
       // console.log({topSeedObj})
 
       (top ?
-      pairComponents = [...pairComponents, <FirstColumnPair treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+n} coordinates={[x, y]} topOrBottom="top" key={key} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList}/>]
+      pairComponents = [...pairComponents, <FirstColumnPair goldCoordinates={this.props.goldCoordinates} treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+n} coordinates={[x, y]} topOrBottom="top" key={key} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} bracket={this.props.bracket} seedList={this.props.seedList}/>]
       :
-      pairComponents = [...pairComponents, <FirstColumnPair treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+n} coordinates={[x, y]} topOrBottom="bottom" key={key} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList}/>]
+      pairComponents = [...pairComponents, <FirstColumnPair goldCoordinates={this.props.goldCoordinates} treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+n} coordinates={[x, y]} topOrBottom="bottom" key={key} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} bracket={this.props.bracket} seedList={this.props.seedList}/>]
       )
       key = key + 1;
       i = i + 2;

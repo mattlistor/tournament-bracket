@@ -5,12 +5,37 @@ import FirstColumnPlayer from './FirstColumnPlayer.js';
 
 class FirstColumnPair extends Component { 
   
+  generateFirsrtColumnPlayers = () => {
+    // deciphers which ones should be gold
+    let gold = this.props.bracket[this.props.coordinates[0]][this.props.coordinates[1]].goldTopOrBottom
+    console.log(gold)
+    if (gold === "top"){
+      return<>
+        <FirstColumnPlayer gold={true} bracket={this.props.bracket} goldCoordinates={this.props.goldCoordinates} coordinates={this.props.coordinates} treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="top" seedObj={this.props.top} seedNum={this.props.top.seedNum} winnerClickHandle={this.props.winnerClickHandle} />
+        <FirstColumnPlayer gold={false} bracket={this.props.bracket} goldCoordinates={this.props.goldCoordinates} coordinates={this.props.coordinates} treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="bottom" seedObj={this.props.bottom} seedNum={this.props.bottom.seedNum} winnerClickHandle={this.props.winnerClickHandle}/>
+      </>
+    } 
+    if (gold === "bottom"){
+      return<>
+        <FirstColumnPlayer gold={false} bracket={this.props.bracket} goldCoordinates={this.props.goldCoordinates} coordinates={this.props.coordinates} treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="top" seedObj={this.props.top} seedNum={this.props.top.seedNum} winnerClickHandle={this.props.winnerClickHandle} />
+        <FirstColumnPlayer gold={true} bracket={this.props.bracket} goldCoordinates={this.props.goldCoordinates} coordinates={this.props.coordinates} treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="bottom" seedObj={this.props.bottom} seedNum={this.props.bottom.seedNum} winnerClickHandle={this.props.winnerClickHandle}/>
+      </>
+    } 
+    if (gold === "none"){
+      return<>
+        <FirstColumnPlayer gold={false} bracket={this.props.bracket} goldCoordinates={this.props.goldCoordinates} coordinates={this.props.coordinates} treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="top" seedObj={this.props.top} seedNum={this.props.top.seedNum} winnerClickHandle={this.props.winnerClickHandle} />
+        <FirstColumnPlayer gold={false} bracket={this.props.bracket} goldCoordinates={this.props.goldCoordinates} coordinates={this.props.coordinates}treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="bottom" seedObj={this.props.bottom} seedNum={this.props.bottom.seedNum} winnerClickHandle={this.props.winnerClickHandle}/>
+      </>
+    } 
+     
+
+  }
+
   render(){
     return (
         <div className="Pair">
-            <p>{this.props.topOrBottom} - {this.props.treePlacement}</p>
-            <FirstColumnPlayer treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="top" seedObj={this.props.top} seedNum={this.props.top.seedNum} winnerClickHandle={this.props.winnerClickHandle} />
-            <FirstColumnPlayer treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="bottom" seedObj={this.props.bottom} seedNum={this.props.bottom.seedNum} winnerClickHandle={this.props.winnerClickHandle}/>
+            <p>{this.props.topOrBottom} - {this.props.treePlacement} - {this.props.bracket[this.props.coordinates[0]][this.props.coordinates[1]].goldTopOrBottom}</p>
+            {this.generateFirsrtColumnPlayers()}
         </div>
     );
   }

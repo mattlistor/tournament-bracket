@@ -238,7 +238,8 @@ class App extends Component {
               treePlacement: treePlacement-(i-1),
               top: bracketSeedList[seedListIndex],
               bottom: bracketSeedList[seedListIndex+1],
-              interactive: false 
+              interactive: false,
+              goldTopOrBottom: "none"
             }
             bracketFinal[index].push(pair)
             top = !top

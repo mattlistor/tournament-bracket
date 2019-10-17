@@ -49,11 +49,19 @@ class Bracket extends Component {
 
         let x = this.getCoordinates(treePlacement)[0]
         let y = this.getCoordinates(treePlacement)[1]
+        // if the user is clicking on the winner of the final round 
         if(treePlacement === 0) {
             // only does an action if the user clicks on a player that isnt blank & has a partner
             if(this.state.bracket[x][y][topOrBottomPlayer]){
                 if(this.state.bracket[x][y][opposite]){
+                    let updatedBracket = this.state.bracket
+                    updatedBracket[x][y][topOrBottomPlayer].gold = true
+                    // alert(`winner! ${this.state.bracket[x][y][topOrBottomPlayer].name}` )
+                    this.setState({
+                        bracket: updatedBracket,
+                    })
                     alert(`winner! ${this.state.bracket[x][y][topOrBottomPlayer].name}` )
+
                 }
             }
         }
@@ -63,7 +71,6 @@ class Bracket extends Component {
             // only does an action if the user clicks on a player that isnt blank & has a partner
             if(this.state.bracket[x][y][topOrBottomPlayer]){
                 if(this.state.bracket[x][y][opposite]){
-                    // console.log("================made it!")
                     let x2 = this.getCoordinates(this.getChildIndex(treePlacement))[0]
                     let y2 = this.getCoordinates(this.getChildIndex(treePlacement))[1]
                     // console.log("seed you clicked on: ", this.state.bracket[x][y][opposite])
@@ -73,11 +80,19 @@ class Bracket extends Component {
                     // PUTS THE SELECTED INTO THE CHILD IN THE BRACKET
                     // WHERE THE MAGIC MAPPENS 
                     let updatedBracket = this.state.bracket
-                    updatedBracket[x2][y2][topOrBottomPair] = this.state.bracket[x][y][topOrBottomPlayer]
+                    // if the future placement on the seed that was clicked is empty
+                    if (!updatedBracket[x2][y2][topOrBottomPair]){
+                        // WHERE THE MAGIC MAPPENS 
+                        let newObj = {...this.state.bracket[x][y][topOrBottomPlayer]}
+                        updatedBracket[x2][y2][topOrBottomPair] = newObj    
+                        // console.log(topOrBottomPlayer)
+                        // updatedBracket[x2][y2].goldTopOrBottom = topOrBottomPlayer
+                        updatedBracket[x][y][topOrBottomPlayer].gold = true
+                    }
 
                     // this.setState causes a rerender of <Bracket/>, causing it to update on the screen
                     this.setState({
-                        bracket: updatedBracket
+                        bracket: updatedBracket,
                     })
                 }
                 }
@@ -198,16 +213,16 @@ class Bracket extends Component {
 
         let columnComponents = bracketObj.map((pairs, index) => {
             if (index === semiFinalColumn){
-                return <Column bracket={this.state.bracket} getCoordinates={this.getCoordinates} treeTopPlacement={this.topTreePlacementsPerColumn()[index]} height={this.state.columnHeight} winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} name="Semifinals" key={index} columnNumber={index}/>
+                return <Column goldCoordinates={this.state.goldCoordinates} bracket={this.state.bracket} getCoordinates={this.getCoordinates} treeTopPlacement={this.topTreePlacementsPerColumn()[index]} height={this.state.columnHeight} winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} name="Semifinals" key={index} columnNumber={index}/>
             }
             else if(index === finalColumn){
-                return <Column bracket={this.state.bracket} getCoordinates={this.getCoordinates} treeTopPlacement={this.topTreePlacementsPerColumn()[index]} height={this.state.columnHeight} winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} name="Finals" key={index} columnNumber={index}/>
+                return <Column goldCoordinates={this.state.goldCoordinates} bracket={this.state.bracket} getCoordinates={this.getCoordinates} treeTopPlacement={this.topTreePlacementsPerColumn()[index]} height={this.state.columnHeight} winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} name="Finals" key={index} columnNumber={index}/>
             }
             else if(index === firstColumn){
                 // return <FirstColumn name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn}/>
             }
             else{
-                return <Column bracket={this.state.bracket} getCoordinates={this.getCoordinates} treeTopPlacement={this.topTreePlacementsPerColumn()[index]} height={this.state.columnHeight} winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} name={`Round ${index+2}`} key={index} columnNumber={index}/>
+                return <Column goldCoordinates={this.state.goldCoordinates} bracket={this.state.bracket} getCoordinates={this.getCoordinates} treeTopPlacement={this.topTreePlacementsPerColumn()[index]} height={this.state.columnHeight} winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} name={`Round ${index+2}`} key={index} columnNumber={index}/>
             }
         })
         columnComponents.shift() // remove the first column 
@@ -216,11 +231,9 @@ class Bracket extends Component {
     }
 
     render(){
-        // console.log(this.topTreePlacementsPerColumn())
-        // console.log(this.props.bracket)
         return ( 
             <div className="Bracket">
-                <FirstColumn getCoordinates={this.getCoordinates} treeTopPlacement={this.props.treeSize-(this.props.seedList.length/2)} name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn} bracket={this.state.bracket}/>
+                <FirstColumn goldCoordinates={this.state.goldCoordinates} getCoordinates={this.getCoordinates} treeTopPlacement={this.props.treeSize-(this.props.seedList.length/2)} name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn} bracket={this.state.bracket}/>
                 {this.generateColumnComponents()}
                 {/* <Column height={this.state.columnHeight} pairAmount={1} name="Finals" /> */}
                 {/* <FinalColumn name="Finals" height={this.state.height} winnerClickHandle={this.winnerClickHandle} pairAmount={1} playerAmount={2} seedList={this.state.seedListFinalColumn}/> */}

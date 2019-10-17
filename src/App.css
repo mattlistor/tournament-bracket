@@ -405,7 +405,26 @@ h1 {
   border-radius: 3px;
 }
 
+.PlayerGold{
+  background-color: #e6b02d;
+  font-size: 16px;
+  color: #24413c;
+  width: 200px;
+  height: 32px;
+  /* padding: 10px; */
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  /* justify-content: space-between; */
+  /* border:solid 1px; */
+  border-radius: 3px;
+}
 
+.PlayerGold#top{
+  /* border-bottom: solid 1px; 
+  border-color: white; */
+  margin-bottom: 4px;
+}
 
 .Player#top{
   /* border-bottom: solid 1px; 
@@ -419,7 +438,6 @@ h1 {
 
 .Player:hover{
   /* transition-duration: 0.4s; */
-
   background-color: #e6b02d;
 }
 .Player:hover > div{

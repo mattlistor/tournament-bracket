@@ -12,7 +12,7 @@ class Sidebar extends Component {
             
             {/* SEED FORM */}
             <form className="seedForm">
-                <input id="seedInput" type="text" placeholder="Enter Seed" name="name" maxLength="18" onChange={(e) => this.props.currentSeedChange(e)}/>
+                <input id="seedInput" type="text" placeholder="Enter 4, 8, 16, or 32 Seeds" name="name" maxLength="18" onChange={(e) => this.props.currentSeedChange(e)}/>
                 <input id="myPlusBtn" type="submit" value="+"  onClick={(e) => this.props.submitSeed(e)}/>
             </form>
            

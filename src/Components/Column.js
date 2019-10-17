@@ -30,11 +30,11 @@ class Column extends Component {
       if(pairObj.bottom){
         bottomSeedObj = pairObj.bottom
       }
-
+      // debugger
       (top ? 
-      pairComponents = [...pairComponents, <Pair treePlacement={this.props.treeTopPlacement+i} topOrBottom="top" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList}/>]
+      pairComponents = [...pairComponents, <Pair coordinates={[x,y]} goldCoordinates={this.props.goldCoordinates} treePlacement={this.props.treeTopPlacement+i} topOrBottom="top" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList} bracket={this.props.bracket}/>]
       :
-      pairComponents = [...pairComponents, <Pair treePlacement={this.props.treeTopPlacement+i} topOrBottom="bottom" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList}/>]
+      pairComponents = [...pairComponents, <Pair coordinates={[x,y]} goldCoordinates={this.props.goldCoordinates} treePlacement={this.props.treeTopPlacement+i} topOrBottom="bottom" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList} bracket={this.props.bracket}/>]
       )
       i = i + 1;
       top = !top
