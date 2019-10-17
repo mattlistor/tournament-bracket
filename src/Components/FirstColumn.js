@@ -54,16 +54,32 @@ class FirstColumn extends Component {
     let i = 0
     let key = 1
     let top = true
-    let x = 0 
+    let n = 0 
+
     while (i < this.props.pairAmount * 2) {
+      let x = this.props.getCoordinates(this.props.treeTopPlacement+n)[0]
+      let y = this.props.getCoordinates(this.props.treeTopPlacement+n)[1]   
+      let pairObj = this.props.bracket[x][y]
+  
+      let topSeedObj = {name: "", seed_num: "-"}
+      let bottomSeedObj = {name: "", seed_num: "-"}
+      if(pairObj.top){
+        topSeedObj = pairObj.top
+      }
+      if(pairObj.bottom){
+        bottomSeedObj = pairObj.bottom
+      }
+
+      // console.log({topSeedObj})
+
       (top ?
-      pairComponents = [...pairComponents, <FirstColumnPair treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+x} coordinates={0, 0} topOrBottom="top" key={key} winnerClickHandle={this.props.winnerClickHandle} top={this.props.seedList[i]} bottom={this.props.seedList[i+1]} seedList={this.props.seedList}/>]
+      pairComponents = [...pairComponents, <FirstColumnPair treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+n} coordinates={[x, y]} topOrBottom="top" key={key} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList}/>]
       :
-      pairComponents = [...pairComponents, <FirstColumnPair treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+x} coordinates={0, 0} topOrBottom="bottom" key={key} winnerClickHandle={this.props.winnerClickHandle} top={this.props.seedList[i]} bottom={this.props.seedList[i+1]} seedList={this.props.seedList}/>]
+      pairComponents = [...pairComponents, <FirstColumnPair treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+n} coordinates={[x, y]} topOrBottom="bottom" key={key} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList}/>]
       )
       key = key + 1;
       i = i + 2;
-      x = x + 1
+      n = n + 1
       top = !top
     }
     return pairComponents

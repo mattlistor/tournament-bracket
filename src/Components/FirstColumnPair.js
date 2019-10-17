@@ -9,8 +9,8 @@ class FirstColumnPair extends Component {
     return (
         <div className="Pair">
             <p>{this.props.topOrBottom} - {this.props.treePlacement}</p>
-            <FirstColumnPlayer treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="top" name={this.props.top.name} seedNum={this.props.top.seed_num} winnerClickHandle={this.props.winnerClickHandle} />
-            <FirstColumnPlayer treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="bottom" name={this.props.bottom.name} seedNum={this.props.bottom.seed_num} winnerClickHandle={this.props.winnerClickHandle}/>
+            <FirstColumnPlayer treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="top" seedObj={this.props.top} seedNum={this.props.top.seedNum} winnerClickHandle={this.props.winnerClickHandle} />
+            <FirstColumnPlayer treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treePlacement} topOrBottomPair={this.props.topOrBottom} topOrBottom="bottom" seedObj={this.props.bottom} seedNum={this.props.bottom.seedNum} winnerClickHandle={this.props.winnerClickHandle}/>
         </div>
     );
   }

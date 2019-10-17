@@ -146,15 +146,6 @@ class App extends Component {
     let allowedSeedAmounts = [4, 8, 16, 32, 64]
     if(allowedSeedAmounts.includes(seedList.length)){
 
-      // //fetch to create bracket object 
-      // fetch("http://localhost:3000/brackets", {
-      //   method: 'POST', // or 'PUT'
-      //   body: JSON.stringify({}), // data can be `string` or {object}!
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   }
-      // })
-
       ////map out each seed object into 'data' so we can create it all in one bundle
       let data = this.state.seedList.map((seed, index) => {
         return {
@@ -240,18 +231,16 @@ class App extends Component {
             else{
               topOrBottom = "bottom"
             }
-            
+            // console.log(bracketSeedList)
             let pair = {
               topOrBottom: topOrBottom,
               column: index,
               treePlacement: treePlacement-(i-1),
               top: bracketSeedList[seedListIndex],
               bottom: bracketSeedList[seedListIndex+1],
-              interactive: false
+              interactive: false 
             }
             bracketFinal[index].push(pair)
-            
-            // console.log(treePlacement-(i-1))
             top = !top
             seedListIndex = seedListIndex + 2
           }

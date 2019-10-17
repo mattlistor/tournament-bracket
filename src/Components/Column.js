@@ -17,15 +17,27 @@ class Column extends Component {
     let i = 0
     let top = true 
 
-
     while (i < this.props.pairAmount) {
-        (top ? 
-        pairComponents = [...pairComponents, <Pair treePlacement={this.props.treeTopPlacement+i} topOrBottom="top" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
-        :
-        pairComponents = [...pairComponents, <Pair treePlacement={this.props.treeTopPlacement+i} topOrBottom="bottom" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top="top" bottom="bottom" seedList={this.props.seedList}/>]
-        )
-        i = i + 1;
-        top = !top
+      let x = this.props.getCoordinates(this.props.treeTopPlacement+i)[0]   
+      let y = this.props.getCoordinates(this.props.treeTopPlacement+i)[1]   
+      let pairObj = this.props.bracket[x][y]
+  
+      let topSeedObj = {name: "", seedNum: "-"}
+      let bottomSeedObj = {name: "", seedNum: "-"}
+      if(pairObj.top){
+        topSeedObj = pairObj.top
+      }
+      if(pairObj.bottom){
+        bottomSeedObj = pairObj.bottom
+      }
+
+      (top ? 
+      pairComponents = [...pairComponents, <Pair treePlacement={this.props.treeTopPlacement+i} topOrBottom="top" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList}/>]
+      :
+      pairComponents = [...pairComponents, <Pair treePlacement={this.props.treeTopPlacement+i} topOrBottom="bottom" interactive={this.state.interactive} key={i} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} seedList={this.props.seedList}/>]
+      )
+      i = i + 1;
+      top = !top
     }
     return pairComponents
   }
@@ -42,6 +54,8 @@ class Column extends Component {
     const style = {
         height: this.props.height + 'px'
       };
+    // console.log("column props: " , this.props)
+
     return (
       <div className = "Column" id = "bracketColumn">
         <div className = "columnHeader" >{this.props.name}</div>
