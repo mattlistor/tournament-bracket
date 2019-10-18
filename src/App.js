@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Sidebar from './Components/Sidebar.js';
 import Bracket from './Components/Bracket.js';
+import BracketIndexPage from './Components/BracketIndexPage.js';
 
 import './App.css';
 class App extends Component {
@@ -165,29 +166,10 @@ class App extends Component {
       })
       .then((res) => res.json())
       .then((res) => {
-          //SHUFFLE FUNCTION IS CURRENTLY NOT WORKING
-          //===========================================
-          // var shuffledSeedList = this.shuffle(res)
-          // let bracketSeedList
-          // checks to shuffle, then creates a send-off list of Seed objects 
-        //   if (this.state.shuffle) {
-        //     this.setState({
-        //       showBracket: true, 
-        //       bracketSeedList: shuffledSeedList
-        //     })
-        //     bracketSeedList = shuffledSeedList
-        //   }
-        // if (!this.state.shuffle) {
-        //   this.setState({
-        //     showBracket: true, 
-        //     bracketSeedList: res
-        //   })
-        //   bracketSeedList = res
-        // }
-          // this.setState({
-          //   showBracket: true, 
-          //   bracketSeedList: res
-          // })
+        // SHUFFLE HAPPENS HERE
+        if(this.state.shuffle){
+          res=this.shuffle(res)
+        }
         return res
       })
       .then((bracketSeedList) => {
@@ -208,7 +190,7 @@ class App extends Component {
         bracket[round] = 1
 
         let bracketArray = Object.keys(bracket).map(i => bracket[i])
-        let treePlacementSize = bracketArray.reduce((a, b) => a + b, 0)
+        let treePlacementSize = bracketArray.reduce((a, b) => a + b, 0) // same as the amount of pairs
 
         let bracketFinal =  []
         let seedListIndex = 0
@@ -275,17 +257,6 @@ class App extends Component {
             treeSize: treePlacementSize
           })
         })
-        
-        // GET THE bracketId from the bracket you just made 
-
-        //// TEST ////
-        // let thing = JSON.stringify({
-        //   bracket: JSON.stringify(bracketFinal),
-        //   user_id: 1
-        // })
-        // console.log(JSON.parse(JSON.parse(thing).bracket))
-        //////////////
-
       })
 
     }
@@ -347,6 +318,7 @@ class App extends Component {
         </div>
         :
         null
+        // <BracketIndexPage />
         }
   
       </div>

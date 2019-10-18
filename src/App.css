@@ -420,7 +420,28 @@ h1 {
   border-radius: 3px;
 }
 
+.PlayerLocked{
+  background-color: #f1f1f1;
+  font-size: 16px;
+  color: #24413c;
+  width: 200px;
+  height: 32px;
+  /* padding: 10px; */
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  /* justify-content: space-between; */
+  /* border:solid 1px; */
+  border-radius: 3px;
+}
+
 .PlayerGold#top{
+  /* border-bottom: solid 1px; 
+  border-color: white; */
+  margin-bottom: 4px;
+}
+
+.PlayerLocked#top{
   /* border-bottom: solid 1px; 
   border-color: white; */
   margin-bottom: 4px;
@@ -443,7 +464,7 @@ h1 {
 .Player:hover > div{
   /* transition-duration: 0.4s; */
 
-  background-color: #e6b02d;
+  /* background-color: #e6b02d; */
 }
 
 .Player:active{
@@ -558,4 +579,12 @@ h1 {
  /* position: fixed; */
 }
 
+.BracketIndexPage{
+  position: absolute;
+  left: 420px;
+  /* top: 20px; */
+  color: white;
+  height: 685px;
+  overflow-y: auto;
+}
 

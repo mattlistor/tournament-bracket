@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import FirstColumn from './FirstColumn.js';
 import Column from './Column.js';
+import Modal from './Modal.js';
 // import FinalColumn from './FinalColumn.js';
 
 
@@ -49,25 +50,29 @@ class Bracket extends Component {
 
         let x = this.getCoordinates(treePlacement)[0]
         let y = this.getCoordinates(treePlacement)[1]
-        // if the user is clicking on the winner of the final round 
+        // if the user is clicking on the winner of the |final round| 
         if(treePlacement === 0) {
             // only does an action if the user clicks on a player that isnt blank & has a partner
             if(this.state.bracket[x][y][topOrBottomPlayer]){
                 if(this.state.bracket[x][y][opposite]){
+                    // nothing gets mvoed around in the |final round|, but we still have to make 
+                    // the winner 'gold' and the other player in the pair 'locked' for UX 
                     let updatedBracket = this.state.bracket
                     updatedBracket[x][y][topOrBottomPlayer].gold = true
-                    // alert(`winner! ${this.state.bracket[x][y][topOrBottomPlayer].name}` )
+                    updatedBracket[x][y][opposite].locked = true
+                    updatedBracket[x][y].goldTopOrBottom = topOrBottomPlayer
+
                     this.setState({
                         bracket: updatedBracket,
                     })
+
+                    // make a custom modal alert instead of this
                     alert(`winner! ${this.state.bracket[x][y][topOrBottomPlayer].name}` )
 
                 }
             }
         }
         else {
-            // console.log("has a partner? ", this.state.bracket[x][y][opposite])
-
             // only does an action if the user clicks on a player that isnt blank & has a partner
             if(this.state.bracket[x][y][topOrBottomPlayer]){
                 if(this.state.bracket[x][y][opposite]){
@@ -85,49 +90,24 @@ class Bracket extends Component {
                         // WHERE THE MAGIC MAPPENS 
                         let newObj = {...this.state.bracket[x][y][topOrBottomPlayer]}
                         updatedBracket[x2][y2][topOrBottomPair] = newObj    
-                        // console.log(topOrBottomPlayer)
-                        // updatedBracket[x2][y2].goldTopOrBottom = topOrBottomPlayer
                         updatedBracket[x][y][topOrBottomPlayer].gold = true
+                        updatedBracket[x][y][opposite].locked = true
+                        updatedBracket[x][y].goldTopOrBottom = topOrBottomPlayer
                     }
 
                     // this.setState causes a rerender of <Bracket/>, causing it to update on the screen
                     this.setState({
-                        bracket: updatedBracket,
+                        bracket: updatedBracket
                     })
                 }
                 }
             }
 
-        // when clicked
-        // makes that pair not interactive anymore  
-        // checks if all the pairs in that column are no longer interactive
-        //      -if so, make the next column interactive 
-        // takes the pair that was being clicked on as an argument 
-        // find out if the pair clicked on was a top or bottom (topOrBottom)
-        // find the child pair
-        // if the top pair was clicked then adds it to top of child pair and vice versa
-        // makes 
+
+
         // edit bracket object and rerender
-        
-        // let bracket = {1: this.props.seedList.length / 2}
-        // let pairAmount = this.props.seedList.length / 4
-        // let round = 2 
-        // let pairAmountPerColumn = [[]]
-        // while (pairAmount !== 1) {
-        //     pairAmountPerColumn.push(pairAmount)
-        //     bracket[round] = pairAmount
-        //     pairAmount = pairAmount / 2
-        //     round = round + 1
-        // }
-        // bracket[round] = 1
-  
-        // let bracketArray = Object.keys(bracket).map(i => bracket[i])
-        // let treePlacementSize = bracketArray.reduce((a, b) => a + b, 0)
-
-        // let bracketFinal = this.state.bracket
-        // bracketFinal["treePlacementSize"] = treePlacementSize
-
         //fetch to PATCH request updated bracket
+
         //  console.log(fetch(`http://localhost:3000/brackets/${this.state.bracketId}`, {
         //     method: 'GET', // or 'PUT'
         //     // body: JSON.stringify(
@@ -142,7 +122,7 @@ class Bracket extends Component {
         //       'Content-Type': 'application/json'
         //     }
         //   }))
-        console.log("end click handle")
+        // console.log("end click handle")
     }
 
     getChildIndex = (parentIndex) => {
@@ -232,12 +212,15 @@ class Bracket extends Component {
 
     render(){
         return ( 
+            <>
             <div className="Bracket">
                 <FirstColumn goldCoordinates={this.state.goldCoordinates} getCoordinates={this.getCoordinates} treeTopPlacement={this.props.treeSize-(this.props.seedList.length/2)} name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn} bracket={this.state.bracket}/>
                 {this.generateColumnComponents()}
                 {/* <Column height={this.state.columnHeight} pairAmount={1} name="Finals" /> */}
                 {/* <FinalColumn name="Finals" height={this.state.height} winnerClickHandle={this.winnerClickHandle} pairAmount={1} playerAmount={2} seedList={this.state.seedListFinalColumn}/> */}
             </div>
+            <Modal message={"Hey! Over Here!"}/>
+            </>
         );
   }
 }
