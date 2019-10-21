@@ -1,6 +1,17 @@
 * {
   box-sizing: border-box;
   font-family: 'Ubuntu', sans-serif;
+  /* font-family: 'Teko', sans-serif; */
+  /* font-family: 'Cabin', sans-serif; */
+  /* font-family: 'Turret Road', cursive; */
+  /* font-family: 'Orbitron', sans-serif; */
+  /* font-family: 'Cabin', sans-serif;
+  font-family: 'Orbitron', sans-serif;
+  font-family: 'Teko', sans-serif;
+  /* font-family: 'Turret Road', cursive; */
+  /* font-family: 'Share Tech Mono', monospace;  */
+  /* font-family: 'Overpass Mono', monospace; */
+  font-family: 'Roboto Mono', monospace;
 }
 
 :root {
@@ -187,6 +198,8 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   height: 20px;
   width: 20px;
   background-color: var(--light-green);
+  border-radius: 2px;
+
 }
 
 /* On mouse-over */
@@ -367,6 +380,8 @@ button.generateBtn{
   border: 0px;
   /* border-radius: 3px; */
   margin-right: 20px;
+  border-radius: 2px;
+
 }
 button.generateBtn:active{
   background-color: #c39425;
@@ -472,11 +487,11 @@ h1 {
 
   background-color: #f8ca60;
 }
-.Player:active > div{
+/* .Player:active > div{
   /* transition-duration: 0.4s; */
 
-  background-color: #f8ca60;
-}
+  /* background-color: #f8ca60; */
+/* } */ 
 
 .playerNotInteractive {
   background-color: #f1f1f1;
@@ -586,5 +601,59 @@ h1 {
   color: white;
   height: 685px;
   overflow-y: auto;
+}
+
+/* The Modal (background) */
+.modal {
+  /* display: none; Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 15%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+#object {
+  background-color: #fefefe;
+  margin: auto;
+  /* padding: 20px; */
+  padding-right: 12px;
+  padding-left: 15px;
+  border: 1px solid #888;
+  width: 50%;
+  max-width: 400px;
+  text-align: center;
+  /* font-weight: bold; */
+  /* //// */
+  visibility: hidden;
+  border-radius: 6px;
+}
+
+.message {
+  margin:50px;
+  font-size: 26px;
+  /* font-weight: bold; */
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
 

@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 import Sidebar from './Components/Sidebar.js';
 import Bracket from './Components/Bracket.js';
 import BracketIndexPage from './Components/BracketIndexPage.js';
+import Modal from './Components/Modal.js';
+
 
 import './App.css';
+import './Animations.css'
 class App extends Component {
   state = {
     loggedIn: false,
@@ -17,6 +20,12 @@ class App extends Component {
     shuffle: false,
     showBracket: false,
     bracketSeedList: []
+  }
+
+  closeModal = () => {
+    this.setState({
+        modal: false
+    })
   }
 
   goTologIn = (e) => {
@@ -146,7 +155,6 @@ class App extends Component {
 
     let allowedSeedAmounts = [4, 8, 16, 32, 64]
     if(allowedSeedAmounts.includes(seedList.length)){
-
       ////map out each seed object into 'data' so we can create it all in one bundle
       let data = this.state.seedList.map((seed, index) => {
         return {
@@ -260,6 +268,10 @@ class App extends Component {
       })
 
     }
+    if(!allowedSeedAmounts.includes(seedList.length)) {
+      let message = `Please enter 4, 8, 16, or 32 seeds.`
+      this.showModal(message)
+    }
   }
 
   shuffle = (array) => {
@@ -278,6 +290,13 @@ class App extends Component {
       array[randomIndex] = temporaryValue;
     }
     return array 
+  }
+
+  showModal = (message) => {
+    this.setState({
+      modal: true,
+      modalMessage: message
+    })
   }
   
   render(){
@@ -320,7 +339,12 @@ class App extends Component {
         null
         // <BracketIndexPage />
         }
-  
+
+        {this.state.modal ?
+        <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
+        :
+        null
+        }
       </div>
     );
   }

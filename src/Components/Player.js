@@ -7,9 +7,11 @@ class Player extends Component {
     // decides if the player should be gold or locked or neither 
     if (this.props.gold){
       return(
-        <div className="PlayerGold" id={this.props.topOrBottom}>
-          <div className="bracketSeedNum">{this.props.seedObj.seed_num}</div>
-          <div className="bracketSeedName">{this.props.seedObj.name.substring(0, 18)}</div>
+        <div id="player" className="pulse">
+          <div className="PlayerGold" id={this.props.topOrBottom}>
+            <div className="bracketSeedNum">{this.props.seedObj.seed_num}</div>
+            <div className="bracketSeedName">{this.props.seedObj.name.substring(0, 18)}</div>
+          </div>
         </div>
       )
     }

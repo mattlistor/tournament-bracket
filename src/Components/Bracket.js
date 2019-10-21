@@ -13,7 +13,8 @@ class Bracket extends Component {
         // seedListFinalColumn: ["", ""],
         // pairAmountPerColumn: [],
         bracket: JSON.parse(this.props.bracket),
-        bracketId: this.props.bracketId
+        bracketId: this.props.bracketId,
+        modal: false
     }
 
     componentDidMount(){
@@ -29,6 +30,12 @@ class Bracket extends Component {
 
     componentDidUpdate(){
         // console.log("turtle")
+    }
+
+    closeModal = () => {
+        this.setState({
+            modal: false
+        })
     }
 
     // winnerClickHandle = (e, treePlacement, seedId, topOrBottomPair) => {
@@ -64,10 +71,12 @@ class Bracket extends Component {
 
                     this.setState({
                         bracket: updatedBracket,
+                        modal: true,
+                        modalMessage: `${updatedBracket[x][y][topOrBottomPlayer].name} is the winner!`
                     })
 
-                    // make a custom modal alert instead of this
-                    alert(`winner! ${this.state.bracket[x][y][topOrBottomPlayer].name}` )
+                    // make a custom modal alert instead of this--- DONE!
+                    // alert(`winner! ${this.state.bracket[x][y][topOrBottomPlayer].name}` )
 
                 }
             }
@@ -102,8 +111,6 @@ class Bracket extends Component {
                 }
                 }
             }
-
-
 
         // edit bracket object and rerender
         //fetch to PATCH request updated bracket
@@ -216,10 +223,13 @@ class Bracket extends Component {
             <div className="Bracket">
                 <FirstColumn goldCoordinates={this.state.goldCoordinates} getCoordinates={this.getCoordinates} treeTopPlacement={this.props.treeSize-(this.props.seedList.length/2)} name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn} bracket={this.state.bracket}/>
                 {this.generateColumnComponents()}
-                {/* <Column height={this.state.columnHeight} pairAmount={1} name="Finals" /> */}
-                {/* <FinalColumn name="Finals" height={this.state.height} winnerClickHandle={this.winnerClickHandle} pairAmount={1} playerAmount={2} seedList={this.state.seedListFinalColumn}/> */}
             </div>
-            <Modal message={"Hey! Over Here!"}/>
+            {/* Modal */}
+            {this.state.modal ? 
+            <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
+            :
+            null
+            }
             </>
         );
   }

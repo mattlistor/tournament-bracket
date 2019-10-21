@@ -8,7 +8,7 @@ class Sidebar extends Component {
   render(){
     return (
         <div className="content">
-            <h1>Tournament Bracket Generator</h1>
+            <h1>Tournament <br></br> Bracket  <br></br> Generator</h1>
             
             {/* SEED FORM */}
             <form className="seedForm">

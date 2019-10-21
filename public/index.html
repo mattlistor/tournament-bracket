@@ -4,7 +4,13 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Teko&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:700|Orbitron|Overpass+Mono|Share+Tech+Mono|Teko|Turret+Road:800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:700|Orbitron|Teko|Turret+Road:800&display=swap" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="stylesheet" href="css/animations.css"> -->
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -30,8 +36,29 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
-
     </div>
+    <!-- <script>
+        $(window).scroll(function() {
+          $('#object').each(function(){
+          var imagePos = $(this).offset().top;
+      
+          var topOfWindow = $(window).scrollTop();
+            if (imagePos < topOfWindow+400) {
+              $(this).addClass("expandOpen");
+            }
+          });
+        });
+    </script> -->
+    <script>
+        $('#player').click(function() {
+          $(this).addClass("pulse");
+        });
+    </script>
+    <!-- <script>
+        $('#object').click(function() {
+          $(this).addClass("slideUp");
+        });
+      </script> -->
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
