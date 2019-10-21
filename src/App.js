@@ -3,6 +3,9 @@ import Sidebar from './Components/Sidebar.js';
 import Bracket from './Components/Bracket.js';
 import BracketIndexPage from './Components/BracketIndexPage.js';
 import Modal from './Components/Modal.js';
+import Signup from './Components/Signup.js';
+import Login from './Components/Login.js';
+
 
 
 import './App.css';
@@ -19,7 +22,24 @@ class App extends Component {
     editingSeed: false,
     shuffle: false,
     showBracket: false,
-    bracketSeedList: []
+    bracketSeedList: [],
+    user: ""
+  }
+
+  fetchUser = (userObj) => {
+    fetch("http://localhost:3000/users", {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+        accepts: "application/json"
+      },
+      body: JSON.stringify({user: userObj})
+    })
+    .then(res => res.json())
+    .then(data => {
+      localStorage.setItem("token", data.token)
+      this.setState({user: data.user})
+    })
   }
 
   closeModal = () => {
@@ -137,6 +157,27 @@ class App extends Component {
 
     // fetch to patch seed
 }
+
+  componentDidMount(){
+    let token = localStorage.getItem("token")
+    console.log("token", token)
+    if(token){
+      fetch("http://localhost:3000/api/get_user", {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json",
+          Authorization: `${token}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => this.setState({user: data.user}))
+
+      console.log(this.state.user)
+    }
+    
+
+  }
 
   componentDidUpdate(){
     //puts focus on new edit form and makes the initial value of the input field the current seed name
@@ -298,48 +339,46 @@ class App extends Component {
       modalMessage: message
     })
   }
+
+  loginUser = (userObj) => {
+    console.log("loginUser()")
+    fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+        accepts: "application/json"
+      },
+      body: JSON.stringify({user: userObj})
+    })
+    .then(res => res.json())
+    .then(data => {
+      localStorage.setItem("token", data.token)
+      this.setState({user: data.user})
+    })
+  }
   
   render(){
     // console.log(this.generate())
     return (
       <div>
-        {this.state.addSeeds ? 
+        {false ? 
         <Sidebar seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
         :
-        <div className="main">
-          <video autoPlay muted loop id="myVideo" src="https://ak6.picdn.net/shutterstock/videos/1011043136/preview/stock-footage-close-up-hand-of-people-playing-games-with-friend-people-play-game-together-at-home-people.webm" type="video/mp4" />
-          <div className="content">
-            <h2>Tournament Bracket Generator</h2>
-            {this.state.loggedIn? 
-              <form>
-                  <button id="myBtnLogin" onClick={(e) => this.goTologIn(e)}>Log In</button>
-                  {/* Name: */}
-                  <input type="text" placeholder="Enter username" name="name" onChange={(e) => this.usernameChange(e)}/>
-                <input id="myBtn" type="submit" value="Submit"  onClick={(e) => this.submitLogin(e)}/>
-                {/* {this.state.showUsername ? <div className="name">{this.state.usernameToShow}</div> : null} */}
-              </form>
-            : 
-            <button id="myBtnLogin" onClick={(e) => this.goTologIn(e)}>Log In</button>
-            }
-
-            {/* CHECKBOX */}
-            <label class="container">Custom Checkbox for Shuffle
-              <input type="checkbox" onChange={(e) => this.checkbox(e)} />
-              <span class="checkmark"></span>
-            </label>
-
-          </div>
-        </div>
+        <Login loginUser={this.loginUser}/>
         }
         {this.state.showBracket ?
-        <div className="bracket">
-          <Bracket seedList={this.state.bracketSeedList} treeSize={this.state.treeSize} bracket={this.state.bracket} bracketId={this.state.bracketId}/>
-        </div>
+          <div className="bracket">
+            <Bracket seedList={this.state.bracketSeedList} treeSize={this.state.treeSize} bracket={this.state.bracket} bracketId={this.state.bracketId}/>
+          </div>
         :
         null
         // <BracketIndexPage />
         }
 
+        {/* Signup form */}
+        <Signup fetchUser={this.fetchUser} />
+
+        {/* Modal Pop-up */}
         {this.state.modal ?
         <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
         :
