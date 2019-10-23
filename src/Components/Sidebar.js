@@ -6,12 +6,24 @@ import NavBar from './NavBar.js';
 // import '../App.css';
 
 class Sidebar extends Component {
-  
+  state = {
+    shuffle: false
+  }
+
+  changeShuffle = () => {
+      this.setState({
+        shuffle: !this.state.shuffle
+      })
+      this.props.checkbox(!this.state.shuffle)
+  }
+
   render(){
+
     return (
         <div className="content">
             {/* <NavBar/> */}
-            <h1 className="sidebar">TOURNAMENT <br></br> BRACKET  <br></br> GENERATOR</h1>
+            <div className="sidebar" />
+            {/* <h1 className="sidebar">TOURNAMENT <br></br> BRACKET  <br></br> GENERATOR</h1> */}
             
             {/* SEED FORM */}
             <div className="lowerContainer">
@@ -24,7 +36,7 @@ class Sidebar extends Component {
                   {/* GENERATE BRACKET BUTTON */}
                   {/* <button className="generateBtn" onClick={() => this.props.generate()}>GENERATE</button> */}
 
-                  {[4, 8, 16, 32].includes(this.props.seedList.length) ?
+                  {[4, 8, 16, 32].includes(this.props.seedList.length)  && !this.props.showBracket ?
                   <button className="generateBtnGreenLight" onClick={() => this.props.generate()}>GENERATE</button>
                   :
                   <button className="generateBtn" onClick={() => this.props.generate()}>GENERATE</button>
@@ -33,12 +45,17 @@ class Sidebar extends Component {
 
 
                   {/* CHECKBOX */}
-                  <label className="container">
+                  {/* <label className="container">
                   <input type="checkbox" onChange={(e) => this.props.checkbox(e)} />
                   <span className="checkmark"></span>
-                  <div className="shuffleLabel">Shuffle Seeds</div>
-                  </label>
+                  <div className="shuffleLabel">Shuffle</div>
+                  </label> */}
 
+                  {this.state.shuffle ? 
+                  <div className="shuffleOn" onClick={() => this.changeShuffle()} />
+                  :
+                  <div className="shuffle" onClick={() => this.changeShuffle()} />
+                  }
 
               </div>
 

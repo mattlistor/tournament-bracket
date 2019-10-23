@@ -64,18 +64,16 @@ class App extends Component {
 
   usernameChange = (e) => {
     this.setState({
-      // showUsername: false,
       username: e.target.value,
       editingSeed: false
     })
   }
 
-  checkbox = (e) => {
+  checkbox = (shuffle) => {
     this.setState({
-      shuffle: e.target.checked,
+      shuffle: shuffle,
       showBracket: false
     })
-    // this.generate()
   }
 
   currentSeedChange = (e) => {
@@ -387,7 +385,7 @@ class App extends Component {
       {/* //////////// */}
       <Route path="/sandbox" render={(routerProps) => 
           <>
-          <Sidebar logOut={this.logOut}seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
+          <Sidebar showBracket={this.state.showBracket} logOut={this.logOut}seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
           
           {this.state.showBracket ?
             <div className="bracket">
@@ -406,6 +404,7 @@ class App extends Component {
           </>
         }/>
        {/* ////////// */}
+      
       </>
     );
   }

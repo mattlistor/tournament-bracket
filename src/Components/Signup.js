@@ -16,6 +16,7 @@ class Signup extends React.Component {
     submitHandler = (e) => {
         e.preventDefault()
         this.props.fetchUser(this.state)
+        
     }
 
     render() {

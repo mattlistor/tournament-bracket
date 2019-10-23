@@ -34,8 +34,9 @@ class Seed extends Component {
             <div className="seedNum">{this.props.num + 1}</div>
             <div>{this.props.name}</div>
             <div>
-            <img alt="" id="deleteSeed" src="https://i.imgur.com/8QW5PPi.png" opacity="70%" width = "12px" height = "12px" onClick={() => this.props.editSeed(this.props.num)}/>
-            <img alt="" id="deleteSeed" src="https://i.imgur.com/8ewvxwB.png" width = "12px" height = "12px" onClick={() => this.props.deleteSeed(this.props.num)}/>
+            {/* https://i.imgur.com/tw4Z4Zn.jpg */}
+            <img alt="" id="deleteSeed" src="https://i.imgur.com/mrw4Vl1.png" opacity="70%" width = "12px" height = "12px" onClick={() => this.props.editSeed(this.props.num)}/>
+            <img alt="" id="deleteSeed" src="https://i.imgur.com/60h7ZE9.png" width = "12px" height = "12px" onClick={() => this.props.deleteSeed(this.props.num)}/>
             </div>
         </div>
         }
