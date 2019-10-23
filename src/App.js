@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
+import {withRouter, Switch, Route} from 'react-router-dom'
 import Sidebar from './Components/Sidebar.js';
 import Bracket from './Components/Bracket.js';
 import BracketIndexPage from './Components/BracketIndexPage.js';
 import Modal from './Components/Modal.js';
 import Signup from './Components/Signup.js';
 import Login from './Components/Login.js';
+import NavBar from './Components/NavBar.js';
+import Welcome from './Components/Welcome.js';
 
 
 
@@ -26,7 +29,16 @@ class App extends Component {
     user: ""
   }
 
+  goToSignup = () => {
+    this.props.history.push("/signup")
+  }
+
+  goToLogin = () => {
+    this.props.history.push("/login")
+  }
+
   fetchUser = (userObj) => {
+    // console.log(userObj)
     fetch("http://localhost:3000/users", {
       method: "POST",
       headers:{
@@ -39,6 +51,8 @@ class App extends Component {
     .then(data => {
       localStorage.setItem("token", data.token)
       this.setState({user: data.user})
+      if(userObj.name !== ""){this.props.history.push("/sandbox")}
+      else{this.props.history.push("/signup")}
     })
   }
 
@@ -48,42 +62,12 @@ class App extends Component {
     })
   }
 
-  goTologIn = (e) => {
-    e.preventDefault()
-    this.setState({
-      loggedIn: !this.state.loggedIn,
-    })
-  }
-
   usernameChange = (e) => {
     this.setState({
       // showUsername: false,
       username: e.target.value,
       editingSeed: false
     })
-  }
-
-  submitLogin = (e) => {
-    e.preventDefault()
-
-    // if (this.state.username !== "" && !this.state.showUsername){
-    //   this.setState({
-    //     showUsername: !this.state.showUsername,
-    //     usernameToShow: this.state.username
-    //   })
-    // }
-    // if (this.state.usernameToShow !== "" && this.state.showUsername){
-    //   this.setState({
-    //     usernameToShow: this.state.username
-    //   })  
-    // }
-    // if (this.state.usernameToShow === this.state.username){
-    //   // this.setState({
-    //   //   loggedIn: false
-    //   // }) 
-    // }
-    
-    // fetch to create a new user
   }
 
   checkbox = (e) => {
@@ -279,7 +263,7 @@ class App extends Component {
           treePlacement -= columnPairAmount
         })
         bracketFinal["treePlacementSize"] = treePlacementSize
-
+        // debugger
         //fetch to create bracket object 
         fetch("http://localhost:3000/brackets", {
           method: 'POST', // or 'PUT'
@@ -287,7 +271,7 @@ class App extends Component {
             {
             bracket: {
               bracket: JSON.stringify(bracketFinal),
-              user_id: 1
+              user_id: this.state.user.id
               }
             }
           ), 
@@ -341,7 +325,6 @@ class App extends Component {
   }
 
   loginUser = (userObj) => {
-    console.log("loginUser()")
     fetch("http://localhost:3000/api/login", {
       method: "POST",
       headers:{
@@ -352,41 +335,80 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(data => {
-      localStorage.setItem("token", data.token)
-      this.setState({user: data.user})
+      if(data.errors){
+        console.log(data.errors)
+        let message = `Invalid username or password`
+        this.showModal(message)
+        // console.log('poop')
+
+        this.props.history.push("/login") 
+      }
+      else{
+        localStorage.setItem("token", data.token)
+        this.setState({user: data.user})
+        // redirect to the bracket generator
+        this.props.history.push("/sandbox") 
+      }
+
+
     })
+  }
+
+  logOut = () => {
+    localStorage.removeItem("token")
+    this.setState({user: ""}) 
+    // redirect to the bracket generator
+    this.props.history.push("/login") 
   }
   
   render(){
-    // console.log(this.generate())
     return (
-      <div>
-        {false ? 
-        <Sidebar seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
-        :
-        <Login loginUser={this.loginUser}/>
-        }
-        {this.state.showBracket ?
-          <div className="bracket">
-            <Bracket seedList={this.state.bracketSeedList} treeSize={this.state.treeSize} bracket={this.state.bracket} bracketId={this.state.bracketId}/>
-          </div>
-        :
-        null
-        // <BracketIndexPage />
-        }
+      <>
+      {/* <NavBar/> */}
+      <Route path="/welcome" render={(routerProps) => 
+        <>
+          <Welcome goToSignup={this.goToSignup} goToLogin={this.goToLogin}/>
+        </>
+      }/>
+      <Route path="/signup" render={(routerProps) => <Signup fetchUser={this.fetchUser} /> }/>
+      <Route path="/login" render={(routerProps) => 
+        <>
+          <Login loginUser={this.loginUser} />
 
-        {/* Signup form */}
-        <Signup fetchUser={this.fetchUser} />
+          {/* Modal Pop-up */}
+          {this.state.modal ?
+          <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
+          :
+          null
+          }
+        </>} 
+      />
 
-        {/* Modal Pop-up */}
-        {this.state.modal ?
-        <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
-        :
-        null
-        }
-      </div>
+      {/* //////////// */}
+      <Route path="/sandbox" render={(routerProps) => 
+          <>
+          <Sidebar logOut={this.logOut}seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
+          
+          {this.state.showBracket ?
+            <div className="bracket">
+              <Bracket seedList={this.state.bracketSeedList} treeSize={this.state.treeSize} bracket={this.state.bracket} bracketId={this.state.bracketId}/>
+            </div>
+          :
+            null
+          }
+
+          {/* Modal Pop-up */}
+            {this.state.modal ?
+            <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
+            :
+            null
+            }
+          </>
+        }/>
+       {/* ////////// */}
+      </>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

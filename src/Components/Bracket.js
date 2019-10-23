@@ -209,7 +209,7 @@ class Bracket extends Component {
                 // return <FirstColumn name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn}/>
             }
             else{
-                return <Column goldCoordinates={this.state.goldCoordinates} bracket={this.state.bracket} getCoordinates={this.getCoordinates} treeTopPlacement={this.topTreePlacementsPerColumn()[index]} height={this.state.columnHeight} winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} name={`Round ${index+2}`} key={index} columnNumber={index}/>
+                return <Column goldCoordinates={this.state.goldCoordinates} bracket={this.state.bracket} getCoordinates={this.getCoordinates} treeTopPlacement={this.topTreePlacementsPerColumn()[index]} height={this.state.columnHeight} winnerClickHandle={this.winnerClickHandle} pairAmount={pairs.length} name={`Round ${index+1}`} key={index} columnNumber={index}/>
             }
         })
         columnComponents.shift() // remove the first column 

@@ -32,11 +32,14 @@ class Modal extends Component {
     render(){
         return (  
             <div id="myModal" className="modal" onClick={() => this.props.closeModal()}>
+            <div className="closeContainer">
+                <div className="close" onClick={() => this.props.closeModal()}>&times;</div>
+            </div>
                 <div id="object" className="fadeIn" onClick={() => this.props.closeModal()}>
-                    <div className="close" onClick={() => this.props.closeModal()}>&times;</div>
-                    <div className="message">
-                        <p>{this.props.message}</p>
-                    </div>                    
+                <div className="message">
+                    {/* <img width="70px" src=" https://i.imgur.com/Pl3IBnf.png" /> */}
+                    <p>{this.props.message}</p>
+                </div>                    
                 </div>
             </div>
         );

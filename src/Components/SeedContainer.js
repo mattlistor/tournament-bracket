@@ -14,9 +14,17 @@ class SeedContainer extends Component {
   
   render(){
     return (
-        <div className="SeedContainer">
-         {this.generateSeedComponents()}
-        </div>
+      <>
+        {this.props.greenLight ?
+          <div className="SeedContainerGreenLight">
+          {this.generateSeedComponents()}
+          </div>
+          :
+          <div className="SeedContainer">
+          {this.generateSeedComponents()}
+         </div>
+        }
+      </>
     );
   }
 }
