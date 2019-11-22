@@ -349,8 +349,8 @@ class App extends Component {
   render(){
     return (
       <>
-      <Route path="/signup" render={(routerProps) => <Signup fetchUser={this.fetchUser} /> }/>
-      <Route path="/login" render={(routerProps) => 
+      <Route exact path="/signup" render={(routerProps) => <Signup fetchUser={this.fetchUser} /> }/>
+      <Route exact path="/login" render={(routerProps) => 
         <>
           <Login loginUser={this.loginUser} />
 
@@ -364,7 +364,7 @@ class App extends Component {
       />
 
       {/* //////////// */}
-      <Route path="/sandbox" render={(routerProps) => 
+      <Route exact path="/sandbox" render={(routerProps) => 
           <>
           <Sidebar shuffle={this.state.shuffle} clear={this.clear} showBracket={this.state.showBracket} logOut={this.logOut}seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
           
