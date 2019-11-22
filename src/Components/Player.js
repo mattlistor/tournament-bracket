@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-// import '../App.css';
-
 class Player extends Component { 
   generatePlayer = () => {
     // decides if the player should be gold or locked or neither 
@@ -10,7 +8,7 @@ class Player extends Component {
         <div id="player" className="pulse">
           <div className="PlayerGold" id={this.props.topOrBottom}>
             <div className="bracketSeedNum">{this.props.seedObj.seed_num}</div>
-            <div className="bracketSeedName">{this.props.seedObj.name.substring(0, 18)}</div>
+            <div className="bracketSeedName">{this.props.seedObj.name.substring(0, 14)}</div>
           </div>
         </div>
       )
@@ -19,7 +17,7 @@ class Player extends Component {
       return(
         <div className="PlayerLocked" id={this.props.topOrBottom}>
           <div className="bracketSeedNum">{this.props.seedObj.seed_num}</div>
-          <div className="bracketSeedName">{this.props.seedObj.name.substring(0, 18)}</div>
+          <div className="bracketSeedName">{this.props.seedObj.name.substring(0, 14)}</div>
         </div>
       )
     }
@@ -27,7 +25,7 @@ class Player extends Component {
       return(
         <div className="Player" id={this.props.topOrBottom} onClick={(e) => this.props.winnerClickHandle(e, this.props.treePlacement, this.props.topOrBottomPair, this.props.topOrBottom)}>
           <div className="bracketSeedNum">{this.props.seedObj.seed_num}</div>
-          <div className="bracketSeedName">{this.props.seedObj.name.substring(0, 18)}</div>
+          <div className="bracketSeedName">{this.props.seedObj.name.substring(0, 14)}</div>
         </div>
       )
     }
@@ -38,7 +36,6 @@ class Player extends Component {
       <>
       {this.generatePlayer()}
       </>
-
     );
   }
 }

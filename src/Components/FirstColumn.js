@@ -37,7 +37,6 @@ class FirstColumn extends Component {
     let rowAmount2 = this.props.seedList.length / 2 
     treeTopPlacement = this.props.treeTopPlacement-rowAmount2
     for (let x = 0; x < columnAmount2; x++){
-      // debugger
       // starts at 3 and adds up ++ each loop
       for (let y = 0; y < rowAmount2; y++){
         if (treeArray[x][y] === treePlacement){
@@ -69,9 +68,6 @@ class FirstColumn extends Component {
       if(pairObj.bottom){
         bottomSeedObj = pairObj.bottom
       }
-
-      // console.log({topSeedObj})
-
       (top ?
       pairComponents = [...pairComponents, <FirstColumnPair goldCoordinates={this.props.goldCoordinates} treeTopPlacement={this.props.treeTopPlacement} treePlacement={this.props.treeTopPlacement+n} coordinates={[x, y]} topOrBottom="top" key={key} winnerClickHandle={this.props.winnerClickHandle} top={topSeedObj} bottom={bottomSeedObj} bracket={this.props.bracket} seedList={this.props.seedList}/>]
       :
@@ -86,15 +82,12 @@ class FirstColumn extends Component {
   }
 
   render(){
-    // console.log("props: ", JSON.parse(this.props.bracket)[0].length)
-    // console.log("props: ", this.props.seedList.length/2)
-    // console.log(this.getCoordinates(0)) // should be [0, 0]
     return (
       <div className = "FirstColumn" id = "bracketColumn">
-      <div className = "columnHeader" >{this.props.name}</div>
-      <div className = "firstPairContainer" id = "firstPairContainer">
-            {this.generateFirstColumnPairs()}
-      </div>
+        <div className = "columnHeader" >{this.props.name}</div>
+        <div className = "firstPairContainer" id = "firstPairContainer">
+              {this.generateFirstColumnPairs()}
+        </div>
       </div>
     );
   }

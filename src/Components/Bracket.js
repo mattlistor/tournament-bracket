@@ -2,16 +2,10 @@ import React, {Component} from 'react';
 import FirstColumn from './FirstColumn.js';
 import Column from './Column.js';
 import Modal from './Modal.js';
-// import FinalColumn from './FinalColumn.js';
-
-
-// import '../App.css';
 
 class Bracket extends Component {
     state = {
-        seedListFirstColumn: this.props.seedList, //need to narrow down by that particular bracket id
-        // seedListFinalColumn: ["", ""],
-        // pairAmountPerColumn: [],
+        seedListFirstColumn: this.props.seedList,
         bracket: JSON.parse(this.props.bracket),
         bracketId: this.props.bracketId,
         modal: false
@@ -28,25 +22,13 @@ class Bracket extends Component {
         })
     }
 
-    componentDidUpdate(){
-        // console.log("turtle")
-    }
-
     closeModal = () => {
         this.setState({
             modal: false
         })
     }
 
-    // winnerClickHandle = (e, treePlacement, seedId, topOrBottomPair) => {
     winnerClickHandle = (e, treePlacement, topOrBottomPair, topOrBottomPlayer) => {
-
-        // console.log("coorindates: ", this.getCoordinates(treePlacement))
-        // console.log("treePlacement: ", treePlacement)
-        // console.log("childIndex: ", this.getChildIndex(treePlacement))
-        // console.log("topOrBottom pair: ", topOrBottomPair)
-        // console.log("topOrBottom player: ", topOrBottomPlayer)
-
         let opposite = "top" 
         if (topOrBottomPlayer === "top"){
             opposite = "bottom"
@@ -74,10 +56,6 @@ class Bracket extends Component {
                         modal: true,
                         modalMessage: `${updatedBracket[x][y][topOrBottomPlayer].name} is the winner!`
                     })
-
-                    // make a custom modal alert instead of this--- DONE!
-                    // alert(`winner! ${this.state.bracket[x][y][topOrBottomPlayer].name}` )
-
                 }
             }
         }
@@ -87,10 +65,7 @@ class Bracket extends Component {
                 if(this.state.bracket[x][y][opposite]){
                     let x2 = this.getCoordinates(this.getChildIndex(treePlacement))[0]
                     let y2 = this.getCoordinates(this.getChildIndex(treePlacement))[1]
-                    // console.log("seed you clicked on: ", this.state.bracket[x][y][opposite])
-                    // console.log("needs to go to: ", this.getCoordinates(this.getChildIndex(treePlacement)), this.getChildIndex(treePlacement))
-                    // console.log("top or bottom player in child(new) pair: ", topOrBottomPair)
-
+                    
                     // PUTS THE SELECTED INTO THE CHILD IN THE BRACKET
                     // WHERE THE MAGIC MAPPENS 
                     let updatedBracket = this.state.bracket
@@ -129,7 +104,6 @@ class Bracket extends Component {
         //       'Content-Type': 'application/json'
         //     }
         //   }))
-        // console.log("end click handle")
     }
 
     getChildIndex = (parentIndex) => {
@@ -167,7 +141,6 @@ class Bracket extends Component {
         let rowAmount2 = this.props.seedList.length / 2 
         treeTopPlacement = this.props.treeTopPlacement-rowAmount2
         for (let x = 0; x < columnAmount2; x++){
-          // debugger
           // starts at treeTopPlacement and adds up ++ each loop
           for (let y = 0; y < rowAmount2; y++){
             if (treeArray[x][y] === treePlacement){
@@ -193,7 +166,6 @@ class Bracket extends Component {
 
     generateColumnComponents = () => {
         let bracketObj = JSON.parse(this.props.bracket)
-        // let firstColumnTopTreePlacement = getChildIndex
         let firstColumn = 0
         let semiFinalColumn = bracketObj.length-2 //index of second to last column
         let finalColumn = bracketObj.length-1 //index of last column 
@@ -213,23 +185,23 @@ class Bracket extends Component {
             }
         })
         columnComponents.shift() // remove the first column 
-        // console.log(columnComponents)
         return columnComponents
     }
 
     render(){
         return ( 
             <>
-            <div className="Bracket">
-                <FirstColumn goldCoordinates={this.state.goldCoordinates} getCoordinates={this.getCoordinates} treeTopPlacement={this.props.treeSize-(this.props.seedList.length/2)} name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn} bracket={this.state.bracket}/>
-                {this.generateColumnComponents()}
-            </div>
-            {/* Modal */}
-            {this.state.modal ? 
-            <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
-            :
-            null
-            }
+                <div className="Bracket">
+                    <FirstColumn goldCoordinates={this.state.goldCoordinates} getCoordinates={this.getCoordinates} treeTopPlacement={this.props.treeSize-(this.props.seedList.length/2)} name="Round 1" winnerClickHandle={this.winnerClickHandle} pairAmount={Math.ceil(this.state.seedListFirstColumn.length/2)} playerAmount={this.state.seedListFirstColumn.length} seedList={this.state.seedListFirstColumn} bracket={this.state.bracket}/>
+                    {this.generateColumnComponents()}
+                </div>
+                {/* Mod
+                al */}
+                {this.state.modal ? 
+                <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
+                :
+                null
+                }
             </>
         );
   }

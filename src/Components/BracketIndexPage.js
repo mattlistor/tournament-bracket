@@ -8,10 +8,9 @@ class BracketIndexPage extends Component {
     }
 
     getBracketFetch = () => {
-        fetch("http://localhost:3000/brackets")
+        fetch("https://dry-wildwood-54834.herokuapp.com/brackets")
         .then((res) => res.json())
         .then((myJson) => {
-            // console.log(myJson)
             this.setState({
                 bracketIndexArray: myJson
             })

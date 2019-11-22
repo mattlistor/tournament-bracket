@@ -16,7 +16,7 @@ class Signup extends React.Component {
     submitHandler = (e) => {
         e.preventDefault()
         this.props.fetchUser(this.state)
-        
+
     }
 
     render() {
@@ -31,7 +31,7 @@ class Signup extends React.Component {
 
                 <div className="graphicOverlayNotHome"></div>
                 <div className="blackOverlay"></div>
-                <video autoPlay muted loop id="welcomeVideo" src="https://ak4.picdn.net/shutterstock/videos/1022621434/preview/stock-footage-males-hands-holding-joystick-playing-video-game-and-having-fun-close-up.webm" type="video/mp4" />            
+                <video autoPlay muted loop id="welcomeVideo" src="https://media.istockphoto.com/videos/guys-sitting-on-couch-playing-video-games-video-id473174500" type="video/mp4" />
             </div>
         )
 

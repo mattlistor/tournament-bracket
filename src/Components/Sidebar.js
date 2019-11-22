@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import SeedContainer from './SeedContainer.js';
-import NavBar from './NavBar.js';
-
-
-// import '../App.css';
-
 class Sidebar extends Component {
   state = {
-    shuffle: false
+    shuffle: this.props.shuffle
   }
 
   changeShuffle = () => {
@@ -17,11 +12,17 @@ class Sidebar extends Component {
       this.props.checkbox(!this.state.shuffle)
   }
 
+  clear = () => {
+    this.setState({
+      shuffle: false
+    })
+    this.props.clear()
+  }
+
   render(){
 
     return (
         <div className="content">
-            {/* <NavBar/> */}
             <div className="sidebar" />
             {/* <h1 className="sidebar">TOURNAMENT <br></br> BRACKET  <br></br> GENERATOR</h1> */}
             
@@ -34,13 +35,13 @@ class Sidebar extends Component {
             
               <div className="checkbox-and-button">
                   {/* GENERATE BRACKET BUTTON */}
-                  {/* <button className="generateBtn" onClick={() => this.props.generate()}>GENERATE</button> */}
 
                   {[4, 8, 16, 32].includes(this.props.seedList.length)  && !this.props.showBracket ?
                   <button className="generateBtnGreenLight" onClick={() => this.props.generate()}>GENERATE</button>
                   :
                   <button className="generateBtn" onClick={() => this.props.generate()}>GENERATE</button>
                   }
+                  <button className="generateBtn" onClick={() => this.clear()}>CLEAR</button>
                   <button className="generateBtn" onClick={() => this.props.logOut()}>LOGOUT</button>
 
 
@@ -60,15 +61,7 @@ class Sidebar extends Component {
               </div>
 
               <SeedContainer greenLight={false} seedList={this.props.seedList} submitSeedEdit={this.props.submitSeedEdit} editingSeed={this.props.editingSeed} editSeedIndex={this.props.editSeedIndex} editSeed={this.props.editSeed} deleteSeed={this.props.deleteSeed}/>
-
-              {/* SEED CONATINER */}
-              {/* {[4, 8, 16, 32].includes(this.props.seedList.length) ?
-              <SeedContainer greenLight={true} seedList={this.props.seedList} submitSeedEdit={this.props.submitSeedEdit} editingSeed={this.props.editingSeed} editSeedIndex={this.props.editSeedIndex} editSeed={this.props.editSeed} deleteSeed={this.props.deleteSeed}/>
-              :
-              <SeedContainer greenLight={false} seedList={this.props.seedList} submitSeedEdit={this.props.submitSeedEdit} editingSeed={this.props.editingSeed} editSeedIndex={this.props.editSeedIndex} editSeed={this.props.editSeed} deleteSeed={this.props.deleteSeed}/>
-              } */}
-            </div>
-
+            </div> 
       </div> 
     );
   }

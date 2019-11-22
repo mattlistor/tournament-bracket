@@ -15,11 +15,10 @@ class Welcome extends Component {
                 <button className="welcomeBtn" onClick={() => this.props.goToSignup()}>Sign up</button>
                 <button className="welcomeBtn" onClick={() => this.props.goToLogin()}>Log in</button>
             </div>
-            {/* <img className="logo" src="https://i.imgur.com/yPWENUo.png" alt=""></img> */}
 
             <div className="graphicOverlay"></div>
             <div className="blackOverlay"></div>
-            <video autoPlay muted loop id="welcomeVideo" src="https://ak4.picdn.net/shutterstock/videos/1022621434/preview/stock-footage-males-hands-holding-joystick-playing-video-game-and-having-fun-close-up.webm" type="video/mp4" />
+            <video autoPlay muted loop id="welcomeVideo" src="https://media.istockphoto.com/videos/guys-sitting-on-couch-playing-video-games-video-id473174500" type="video/mp4" />
         </div>
     );
   }

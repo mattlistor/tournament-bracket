@@ -2,24 +2,17 @@ import React, {Component} from 'react';
 import {withRouter, Switch, Route} from 'react-router-dom'
 import Sidebar from './Components/Sidebar.js';
 import Bracket from './Components/Bracket.js';
-import BracketIndexPage from './Components/BracketIndexPage.js';
+// import BracketIndexPage from './Components/BracketIndexPage.js';
 import Modal from './Components/Modal.js';
 import Signup from './Components/Signup.js';
 import Login from './Components/Login.js';
-import NavBar from './Components/NavBar.js';
 import Welcome from './Components/Welcome.js';
-
-
 
 import './App.css';
 import './Animations.css'
 class App extends Component {
   state = {
-    loggedIn: false,
     username: "",
-    showUsername: false,
-    usernameToShow: "",
-    addSeeds: true,
     currentSeed: "",
     seedList: [],
     editingSeed: false,
@@ -38,8 +31,7 @@ class App extends Component {
   }
 
   fetchUser = (userObj) => {
-    // console.log(userObj)
-    fetch("http://localhost:3000/users", {
+    fetch("https://dry-wildwood-54834.herokuapp.com/users", {
       method: "POST",
       headers:{
         "Content-Type": "application/json",
@@ -102,10 +94,8 @@ class App extends Component {
   }
 
   deleteSeed = (index) => {
-    console.log("delete seed", index)
     let newArray = [...this.state.seedList]
     newArray.splice(index , 1)
-    console.log(newArray)
 
     this.setState({
       seedList: newArray,
@@ -125,7 +115,6 @@ class App extends Component {
 
   submitSeedEdit = (e, newSeedName) => {
     e.preventDefault()
-    console.log("Submit seed edit -- ", newSeedName)
     
     let newArray = [...this.state.seedList]
     newArray[this.state.editSeedIndex] = newSeedName
@@ -134,17 +123,12 @@ class App extends Component {
       editingSeed: false,
       seedList: newArray
     })
-
-    //FIX BUG WHERE YOU COICK EDIT TWICE AND IT MAEKS IT BLANK
-
-    // fetch to patch seed
 }
 
   componentDidMount(){
     let token = localStorage.getItem("token")
-    console.log("token", token)
     if(token){
-      fetch("http://localhost:3000/api/get_user", {
+      fetch("https://dry-wildwood-54834.herokuapp.com/api/get_user", {
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -154,11 +138,7 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(data => this.setState({user: data.user}))
-
-      console.log(this.state.user)
     }
-    
-
   }
 
   componentDidUpdate(){
@@ -178,7 +158,7 @@ class App extends Component {
 
     let allowedSeedAmounts = [4, 8, 16, 32, 64]
     if(allowedSeedAmounts.includes(seedList.length)){
-      ////map out each seed object into 'data' so we can create it all in one bundle
+      //map out each seed object into 'data' so we can create it all in one bundle
       let data = this.state.seedList.map((seed, index) => {
         return {
           name: seed,
@@ -188,7 +168,7 @@ class App extends Component {
       })
         
       //creates all seed in one bundle, not one-by-one
-      fetch("http://localhost:3000/seeds", {
+      fetch("https://dry-wildwood-54834.herokuapp.com/seeds", {
         method: 'POST', // or 'PUT'
         body: JSON.stringify({data}), // data can be `string` or {object}!
         headers: {
@@ -233,10 +213,7 @@ class App extends Component {
           let top = true
 
           for (i = columnPairAmount; i > 0; i--) {
-            //pushes a PAIR to the index (column) of the array (bracket)
-
-            // bracketFinal[index].push([bracketSeedList[seedListIndex], bracketSeedList[seedListIndex+1]])
-            
+            //pushes a PAIR to the index (column) of the array (bracket)            
             let topOrBottom
             if(top){
               topOrBottom = "top"
@@ -244,7 +221,6 @@ class App extends Component {
             else{
               topOrBottom = "bottom"
             }
-            // console.log(bracketSeedList)
             let pair = {
               topOrBottom: topOrBottom,
               column: index,
@@ -261,9 +237,8 @@ class App extends Component {
           treePlacement -= columnPairAmount
         })
         bracketFinal["treePlacementSize"] = treePlacementSize
-        // debugger
         //fetch to create bracket object 
-        fetch("http://localhost:3000/brackets", {
+        fetch("https://dry-wildwood-54834.herokuapp.com/brackets", {
           method: 'POST', // or 'PUT'
           body: JSON.stringify(
             {
@@ -279,7 +254,6 @@ class App extends Component {
         })
         .then(res => res.json())
         .then(res => {
-          // console.log("res", res.id)
           this.setState({
             bracket: res.bracket,
             bracketId: res.id,
@@ -315,6 +289,15 @@ class App extends Component {
     return array 
   }
 
+  clear = () => {
+    this.setState({
+      seedList: [],
+      showBracket: false,
+      shuffle: false,
+      bracketSeedList: [],
+    })
+  }
+
   showModal = (message) => {
     this.setState({
       modal: true,
@@ -323,7 +306,7 @@ class App extends Component {
   }
 
   loginUser = (userObj) => {
-    fetch("http://localhost:3000/api/login", {
+    fetch("https://dry-wildwood-54834.herokuapp.com/api/login", {
       method: "POST",
       headers:{
         "Content-Type": "application/json",
@@ -333,17 +316,15 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(data => {
+      // invalid username or password - then redirects back to login screen
       if(data.errors){
-        console.log(data.errors)
         let message = `Invalid username or password`
         this.showModal(message)
-        // console.log('poop')
-
         this.props.history.push("/login") 
       }
       else{
         localStorage.setItem("token", data.token)
-        this.setState({user: data.user})
+        this.setState({user: data.user, shuffle: false})
         // redirect to the bracket generator
         this.props.history.push("/sandbox") 
       }
@@ -354,7 +335,13 @@ class App extends Component {
 
   logOut = () => {
     localStorage.removeItem("token")
-    this.setState({user: ""}) 
+    //reset everything and clear seedlist and bracket display info
+    this.setState({
+      user: "", 
+      showBracket: false,
+      bracketSeedList: [],
+      seedList:[]
+    }) 
     // redirect to the bracket generator
     this.props.history.push("/login") 
   }
@@ -362,12 +349,6 @@ class App extends Component {
   render(){
     return (
       <>
-      {/* <NavBar/> */}
-      <Route path="/welcome" render={(routerProps) => 
-        <>
-          <Welcome goToSignup={this.goToSignup} goToLogin={this.goToLogin}/>
-        </>
-      }/>
       <Route path="/signup" render={(routerProps) => <Signup fetchUser={this.fetchUser} /> }/>
       <Route path="/login" render={(routerProps) => 
         <>
@@ -385,7 +366,7 @@ class App extends Component {
       {/* //////////// */}
       <Route path="/sandbox" render={(routerProps) => 
           <>
-          <Sidebar showBracket={this.state.showBracket} logOut={this.logOut}seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
+          <Sidebar shuffle={this.state.shuffle} clear={this.clear} showBracket={this.state.showBracket} logOut={this.logOut}seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
           
           {this.state.showBracket ?
             <div className="bracket">
@@ -404,6 +385,12 @@ class App extends Component {
           </>
         }/>
        {/* ////////// */}
+
+       <Route exact path="/" render={(routerProps) => 
+        <>
+          <Welcome goToSignup={this.goToSignup} goToLogin={this.goToLogin}/>
+        </>
+      }/>
       
       </>
     );

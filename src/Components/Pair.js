@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import Player from './Player.js';
-
-// import '../App.css';
-
 class Pair extends Component { 
   generatePlayers = () => {
     // deciphers which ones should be gold and which should be locked (no hover color change)
