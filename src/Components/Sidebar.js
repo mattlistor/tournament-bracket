@@ -44,14 +44,6 @@ class Sidebar extends Component {
                   <button className="generateBtn" onClick={() => this.clear()}>CLEAR</button>
                   <button className="generateBtn" onClick={() => this.props.logOut()}>LOGOUT</button>
 
-
-                  {/* CHECKBOX */}
-                  {/* <label className="container">
-                  <input type="checkbox" onChange={(e) => this.props.checkbox(e)} />
-                  <span className="checkmark"></span>
-                  <div className="shuffleLabel">Shuffle</div>
-                  </label> */}
-
                   {this.state.shuffle ? 
                   <div className="shuffleOn" onClick={() => this.changeShuffle()} />
                   :

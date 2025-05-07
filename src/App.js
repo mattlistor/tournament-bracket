@@ -159,7 +159,7 @@ class App extends Component {
     let allowedSeedAmounts = [4, 8, 16, 32, 64]
     if(allowedSeedAmounts.includes(seedList.length)){
       //map out each seed object into 'data' so we can create it all in one bundle
-      let data = this.state.seedList.map((seed, index) => {
+      let bracketSeedList = this.state.seedList.map((seed, index) => {
         return {
           name: seed,
           seed_num: index + 1,
@@ -168,23 +168,28 @@ class App extends Component {
       })
         
       //creates all seed in one bundle, not one-by-one
-      fetch("https://dry-wildwood-54834.herokuapp.com/seeds", {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify({data}), // data can be `string` or {object}!
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then((res) => res.json())
-      .then((res) => {
-        // SHUFFLE HAPPENS HERE
-        if(this.state.shuffle){
-          res=this.shuffle(res)
-        }
-        return res
-      })
-      .then((bracketSeedList) => {
-        // generate bracket object
+      // fetch("https://dry-wildwood-54834.herokuapp.com/seeds", {
+      //   method: 'POST', // or 'PUT'
+      //   body: JSON.stringify({data}), // data can be `string` or {object}!
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // })
+      // .then((res) => res.json())
+      // .then((res) => {
+      //   // SHUFFLE HAPPENS HERE
+      //   if(this.state.shuffle){
+      //     res=this.shuffle(res)
+      //   }
+      //   return res
+      // })
+      // .then((bracketSeedList) => {
+      //   // generate bracket object
+      //   let bracket = {
+      //     1: seedList.length / 2,
+      //   }
+
+      //  generate bracket object
         let bracket = {
           1: seedList.length / 2,
         }
@@ -237,32 +242,41 @@ class App extends Component {
           treePlacement -= columnPairAmount
         })
         bracketFinal["treePlacementSize"] = treePlacementSize
-        //fetch to create bracket object 
-        fetch("https://dry-wildwood-54834.herokuapp.com/brackets", {
-          method: 'POST', // or 'PUT'
-          body: JSON.stringify(
-            {
-            bracket: {
-              bracket: JSON.stringify(bracketFinal),
-              user_id: this.state.user.id
-              }
-            }
-          ), 
-          headers: {
-            'Content-Type': 'application/json'
-          }
+
+        this.setState({
+          bracket: JSON.stringify(bracketFinal),
+          bracketId: bracketFinal.id,
+          showBracket: true, 
+          bracketSeedList: bracketSeedList,
+          treeSize: treePlacementSize
         })
-        .then(res => res.json())
-        .then(res => {
-          this.setState({
-            bracket: res.bracket,
-            bracketId: res.id,
-            showBracket: true, 
-            bracketSeedList: bracketSeedList,
-            treeSize: treePlacementSize
-          })
-        })
-      })
+
+      //   //fetch to create bracket object 
+      //   fetch("https://dry-wildwood-54834.herokuapp.com/brackets", {
+      //     method: 'POST', // or 'PUT'
+      //     body: JSON.stringify(
+      //       {
+      //       bracket: {
+      //         bracket: JSON.stringify(bracketFinal),
+      //         user_id: this.state.user.id
+      //         }
+      //       }
+      //     ), 
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     }
+      //   })
+      //   .then(res => res.json())
+      //   .then(res => {
+      //     this.setState({
+      //       bracket: res.bracket,
+      //       bracketId: res.id,
+      //       showBracket: true, 
+      //       bracketSeedList: bracketSeedList,
+      //       treeSize: treePlacementSize
+      //     })
+      //   })
+      // })
 
     }
     if(!allowedSeedAmounts.includes(seedList.length)) {
@@ -345,27 +359,10 @@ class App extends Component {
     // redirect to the bracket generator
     this.props.history.push("/login") 
   }
-  
+
   render(){
     return (
       <>
-      <Route exact path="/signup" render={(routerProps) => <Signup fetchUser={this.fetchUser} /> }/>
-      <Route exact path="/login" render={(routerProps) => 
-        <>
-          <Login loginUser={this.loginUser} />
-
-          {/* Modal Pop-up */}
-          {this.state.modal ?
-          <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
-          :
-          null
-          }
-        </>} 
-      />
-
-      {/* //////////// */}
-      <Route exact path="/sandbox" render={(routerProps) => 
-          <>
           <Sidebar shuffle={this.state.shuffle} clear={this.clear} showBracket={this.state.showBracket} logOut={this.logOut}seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
           
           {this.state.showBracket ?
@@ -376,25 +373,61 @@ class App extends Component {
             null
           }
 
-          {/* Modal Pop-up */}
             {this.state.modal ?
             <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
             :
             null
             }
           </>
-        }/>
-       {/* ////////// */}
 
-       <Route exact path="/" render={(routerProps) => 
-        <>
-          <Welcome goToSignup={this.goToSignup} goToLogin={this.goToLogin}/>
-        </>
-      }/>
-      
-      </>
     );
   }
+  
+  // render(){
+  //   return (
+  //     <>
+  //     <Route exact path="/signup" render={(routerProps) => <Signup fetchUser={this.fetchUser} /> }/>
+  //     <Route exact path="/login" render={(routerProps) => 
+  //       <>
+  //         <Login loginUser={this.loginUser} />
+
+  //         {this.state.modal ?
+  //         <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
+  //         :
+  //         null
+  //         }
+  //       </>} 
+  //     />
+
+  //     <Route exact path="/sandbox" render={(routerProps) => 
+  //         <>
+  //         <Sidebar shuffle={this.state.shuffle} clear={this.clear} showBracket={this.state.showBracket} logOut={this.logOut}seedList={this.state.seedList} generate={this.generate} submitSeedEdit={this.submitSeedEdit} editingSeed={this.state.editingSeed} editSeedIndex={this.state.editSeedIndex} checkbox={this.checkbox} currentSeedChange={this.currentSeedChange} submitSeed={this.submitSeed} editSeed={this.editSeed} deleteSeed={this.deleteSeed}/>  
+          
+  //         {this.state.showBracket ?
+  //           <div className="bracket">
+  //             <Bracket seedList={this.state.bracketSeedList} treeSize={this.state.treeSize} bracket={this.state.bracket} bracketId={this.state.bracketId}/>
+  //           </div>
+  //         :
+  //           null
+  //         }
+
+  //           {this.state.modal ?
+  //           <Modal closeModal={this.closeModal} message={this.state.modalMessage}/>
+  //           :
+  //           null
+  //           }
+  //         </>
+  //       }/>
+
+  //      <Route exact path="/" render={(routerProps) => 
+  //       <>
+  //         <Welcome goToSignup={this.goToSignup} goToLogin={this.goToLogin}/>
+  //       </>
+  //     }/>
+      
+  //     </>
+  //   );
+  // }
 }
 
 export default withRouter(App);
